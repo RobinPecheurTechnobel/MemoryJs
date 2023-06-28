@@ -1,0 +1,16 @@
+
+.flex-horizontal{
+    display:flex;
+    flex-direction: row;
+}
+.flex-horizontal-espace{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.take-space  div{
+    width: 100%;
+}
+.flex-horizontal button, .flex-horizontal-espace button{
+    width: 100%;
+}
