@@ -102,6 +102,9 @@ function mélangéCarte(){
 function affichageCarte(){
     let zoneDeJeu = document.getElementById("jeu");
     let limiteParRangée = 4;
+    if(cartePosée.length>=32){
+        limiteParRangée =8;
+    }
     for(let i = 0 ; i< cartePosée.length;i++){
         let rangée;
         if(i%limiteParRangée==0){
@@ -145,12 +148,10 @@ function retournerCarte(carte){
 
         let p = document.createElement("p");
         p.innerHTML = carteValeur.valeur;
-        p.style.maxHeight = "50%";
         
         let img2 = document.createElement("img");
         img.parentElement.appendChild(img2);
-        img2.style.maxHeight = "50%";
-        img2.style.margin ="auto";
+        img2.setAttribute("class","couleur");
         
         switch(carteValeur.couleur){
             case "coeur" :
@@ -195,6 +196,7 @@ function retournerCarte(carte){
         }
         
         carte.setAttribute("class",carte.getAttribute("class").replace("carteCachée","carteRetournée"));
+        img.style.left = ((window.innerWidth-450)/52.70+0.6)+"px";
     }
     else if (carte.getAttribute("class").includes("carteRetournée")){
         img.src = "../assets/dos-carte-chartreuse-1.png";
