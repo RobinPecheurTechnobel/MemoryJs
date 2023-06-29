@@ -71,3 +71,6 @@ animation:
 
 design:
 .repenser un peu le design des pages
+
+préférence:
+.gérer le choix des dos de cartes
