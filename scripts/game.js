@@ -128,7 +128,7 @@ function affichageCarte(){
 }
 function choisirCarte(carte){
     vérifierNombreRetournée();
-    if(carte.getAttribute("class").includes("carteCachée")){
+    if(!carte.getAttribute("class").includes("paireTrouvée")){
         majNbCoup();
     }
     retournerCarte(carte);
