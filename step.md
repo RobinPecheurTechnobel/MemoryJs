@@ -11,6 +11,7 @@ La page de jeu
 => Affichage du nombre de paires
 
 Création du dispositf de chrono
+création d'un premier objet memory dans localStorage en guise de stockage "persistant"
 
 Dans cette étape des placeholders seront mis pour le classement
 Et un bouton est mis dans la page de jeu pour revenir vers l'index
@@ -41,3 +42,11 @@ Compter le nombre de carte retournée
 ==> incrémenter le nombre de paires trouvées
 
 Changer l'identification des paires trouvées pour ne pas les inclure dans les recherches de carte retournée
+
+# Etape5
+
+Retirer le bouton de retour au menu
+Ajouter condition de fin de jeu quand le nombre de paire correspond au nombre de carte différent du premier paquet de carte
+Déplacer la logique dernière le boutton de retour dans la logique de fin de partie
+gestion timer, nombre de coup et nombre de paire dans l'objet memory dans local storage
+=> servira pour le calcul du score
