@@ -122,8 +122,7 @@ function affichageCarte(){
         let img = document.createElement("img");
         carte.appendChild(img);
         img.src = "../assets/dos-carte-chartreuse-1.png";
-
-
+        img.setAttribute("class","imageDeFond");
     }
 }
 function choisirCarte(carte){
@@ -142,12 +141,16 @@ function retournerCarte(carte){
         
         let carteValeur = cartePosée[carte.id.replace("carte","")];
 
+        img.src = "../assets/face-carte-chartreuse-1.png";
+
         let p = document.createElement("p");
         p.innerHTML = carteValeur.valeur;
         p.style.maxHeight = "50%";
         
-        img.style.maxHeight = "50%";
-        img.style.margin ="auto";
+        let img2 = document.createElement("img");
+        img.parentElement.appendChild(img2);
+        img2.style.maxHeight = "50%";
+        img2.style.margin ="auto";
         
         switch(carteValeur.couleur){
             case "coeur" :
@@ -156,19 +159,19 @@ function retournerCarte(carte){
                 }
                 else{
                     carte.appendChild(p);
-                    img.style.transform = "scale(-1)";
+                    img2.style.transform = "scale(-1)";
                 }
-                img.src = "../assets/coeur.png";
+                img2.src = "../assets/coeur.png";
                 break;
             case "pique" :
                 if(carteValeur.valeur%2 ==0){
                     carte.insertBefore(p, carte.firstChild);
-                    img.style.transform = "scale(-1)";
+                    img2.style.transform = "scale(-1)";
                 }
                 else{
                     carte.appendChild(p);
                 }
-                img.src = "../assets/pique.png";
+                img2.src = "../assets/pique.png";
                 break;
             case "carreau" :
                 if(carteValeur.valeur%2 ==1){
@@ -177,17 +180,17 @@ function retournerCarte(carte){
                 else{
                     carte.appendChild(p);
                 }
-                img.src = "../assets/carreau.png";
+                img2.src = "../assets/carreau.png";
                 break;
             case "trefle" :
                 if(carteValeur.valeur%2 ==1){
                     carte.insertBefore(p, carte.firstChild);
-                    img.style.transform = "scale(-1)";
+                    img2.style.transform = "scale(-1)";
                 }
                 else{
                     carte.appendChild(p);
                 }
-                img.src = "../assets/trefle.png";
+                img2.src = "../assets/trefle.png";
                 break;
         }
         
@@ -195,10 +198,10 @@ function retournerCarte(carte){
     }
     else if (carte.getAttribute("class").includes("carteRetournée")){
         img.src = "../assets/dos-carte-chartreuse-1.png";
-        img.style ="";
 
         let p = carte.getElementsByTagName("p")[0];
-        p.parentElement.removeChild(p);
+        carte.removeChild(carte.getElementsByTagName("img")[1]);
+        carte.removeChild(p);
         
         carte.setAttribute("class",carte.getAttribute("class").replace("carteRetournée","carteCachée"));
     }

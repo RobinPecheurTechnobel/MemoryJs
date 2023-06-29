@@ -30,6 +30,7 @@ main{
     height: 375px;
     display:flex;
     flex-direction: column;
+    position: relative;
 }
 .carte *{
     text-align: center;
@@ -40,4 +41,13 @@ main{
 }
 .carte img{
     max-width: 100%;
+}
+.carte .imageDeFond{
+    margin-top: 0px;
+}
+.carteRetournée .imageDeFond,
+.paireTrouvée .imageDeFond{
+    margin-top: 0px;
+    position: absolute;
+    z-index: -1;
 }
