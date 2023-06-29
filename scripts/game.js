@@ -40,7 +40,7 @@ function majPaireTrouvée(value){
         memory["partie"]["timer"] = timer(stopTimer);
         memory["partie"]["score"] = 0;
         localStorage.setItem("memory", JSON.stringify(memory));
-        window.location.href = "/index.html";
+        window.location.href = "/finDePartie.html";
     }
 }
 
