@@ -1,7 +1,12 @@
 /*zone header*/
-function chrono(){
+function chrono(value){
     let zoneDeTemps = document.getElementById("chrono");
-    zoneDeTemps.innerHTML = timer(new Date());
+    if(value){
+        clearInterval(refreshTimer);
+        zoneDeTemps.innerHTML = timer(value);
+    }else{
+        zoneDeTemps.innerHTML = timer(new Date());
+    }
 }
 function timer(final){
     return Math.round((final - startTimer)/1000);
@@ -23,26 +28,27 @@ function majPaireTrouvée(value){
         paireTrouvée++;
     }
     document.getElementById("paires").innerHTML = paireTrouvée+" / "+paquet.length;
-}
-function retourMenu(){
-    let stopTimer = new Date();
-    if(!memory){
-        memory = {};
-        memory["partieEnCours"]["timer"] = timer(stopTimer);
+    //Condition de fin de partie
+    if(paireTrouvée == paquet.length){
+        let stopTimer = new Date();
+        chrono(stopTimer);
+        if(!memory){
+            memory = {};
+        }
+        memory["partie"]["paire"] = paireTrouvée
+        memory["partie"]["coups"] = nombreCoup;
+        memory["partie"]["timer"] = timer(stopTimer);
+        memory["partie"]["score"] = 0;
         localStorage.setItem("memory", JSON.stringify(memory));
+        window.location.href = "/index.html";
     }
-    else{
-        memory["partieEnCours"]["timer"] = timer(stopTimer);
-        localStorage.setItem("memory", JSON.stringify(memory));
-    }
-    window.location.href = "/index.html";
 }
 
 /* zone fonctionnalité du memory */
 function préparerPaquet(){
     let maxCouleur=0;
     let mexValeur=4;
-    switch(memory.partieEnCours.difficulté){
+    switch(memory.partie.difficulté){
         case 0: 
             maxCouleur =1;
             break;
@@ -142,6 +148,7 @@ function retournerCarte(carte){
         
         img.style.maxHeight = "50%";
         img.style.margin ="auto";
+        
         switch(carteValeur.couleur){
             case "coeur" :
                 if(carteValeur.valeur%2 ==0){
@@ -149,12 +156,14 @@ function retournerCarte(carte){
                 }
                 else{
                     carte.appendChild(p);
+                    img.style.transform = "scale(-1)";
                 }
                 img.src = "../assets/coeur.png";
                 break;
             case "pique" :
                 if(carteValeur.valeur%2 ==0){
                     carte.insertBefore(p, carte.firstChild);
+                    img.style.transform = "scale(-1)";
                 }
                 else{
                     carte.appendChild(p);
@@ -173,6 +182,7 @@ function retournerCarte(carte){
             case "trefle" :
                 if(carteValeur.valeur%2 ==1){
                     carte.insertBefore(p, carte.firstChild);
+                    img.style.transform = "scale(-1)";
                 }
                 else{
                     carte.appendChild(p);
