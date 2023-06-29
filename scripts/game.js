@@ -15,6 +15,15 @@ function majNbCoup(value){
     }
     document.getElementById("nbCoup").innerHTML = nombreCoup;
 }
+function majPaireTrouvée(value){
+    if(Number.isInteger(value)){
+        paireTrouvée = value;
+    }
+    else{
+        paireTrouvée++;
+    }
+    document.getElementById("paires").innerHTML = paireTrouvée+" / "+paquet.length;
+}
 function retourMenu(){
     let stopTimer = new Date();
     if(!memory){
@@ -112,8 +121,10 @@ function affichageCarte(){
     }
 }
 function choisirCarte(carte){
-    majNbCoup();
     vérifierNombreRetournée();
+    if(carte.getAttribute("class").includes("carteCachée")){
+        majNbCoup();
+    }
     retournerCarte(carte);
     vérifierNombreRetournée(true);
 }
@@ -188,8 +199,18 @@ function vérifierNombreRetournée(checkVictoire){
     if(retournée.length==2){
         id1 = retournée[0].id;
         id2 = retournée[1].id;  
+        if(cartePosée[id1.replace("carte","")].valeur == cartePosée[id2.replace("carte","")].valeur &&
+        cartePosée[id1.replace("carte","")].couleur == cartePosée[id2.replace("carte","")].couleur){
+            majPaireTrouvée();
+            changeClassCarte(retournée[1],"carteRetournée","paireTrouvée");
+            changeClassCarte(retournée[0],"carteRetournée","paireTrouvée");
+        }
+        else{
+            if(!checkVictoire){
                 retournerCarte(retournée[1]);
                 retournerCarte(retournée[0]);
+            }
+        }
     }
 }
 function changeClassCarte(carte,classeAvant,classeAprès){
@@ -200,10 +221,12 @@ function start(){
     préparerPaquet();
     mélangéCarte();
     affichageCarte();
-    document.getElementById("paires").innerHTML = paireTrouvé+" / "+paquet.length;
     majNbCoup(0);
+    majPaireTrouvée(0);
 }
-let paireTrouvé = 0;
+
+/* Main */
+let paireTrouvée;
 let nombreCoup;
 let memory = JSON.parse(localStorage.getItem("memory"));
 let startTimer = new Date();
@@ -213,5 +236,4 @@ let refreshTimer = setInterval(
     },1000);
 let paquet = [];
 let cartePosée = [];
-start();
 start();
