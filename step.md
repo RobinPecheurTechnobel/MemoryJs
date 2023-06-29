@@ -63,8 +63,11 @@ Ajout au classement s'il fait partie des 10 meilleurs scores
 Les bonus:
 
 confort de navigation:
-\*remettre un boutton de retour au menu
+.Remettre un boutton de retour au menu
 => pas de calcul de score
 
 animation:
-\*animation du retournement des cartes
+.animation du retournement des cartes
+
+design:
+.repenser un peu le design des pages
