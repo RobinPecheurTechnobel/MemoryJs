@@ -50,3 +50,21 @@ Ajouter condition de fin de jeu quand le nombre de paire correspond au nombre de
 Déplacer la logique dernière le boutton de retour dans la logique de fin de partie
 gestion timer, nombre de coup et nombre de paire dans l'objet memory dans local storage
 => servira pour le calcul du score
+
+# Etape6
+
+Calcul du score final au retour dans le menu principal
+Ajout au classement s'il fait partie des 10 meilleurs scores
+=> Demander un pseudo
+==>si pas de pseudo, alors pas de classement
+
+# Etape 7
+
+Les bonus:
+
+confort de navigation:
+\*remettre un boutton de retour au menu
+=> pas de calcul de score
+
+animation:
+\*animation du retournement des cartes
