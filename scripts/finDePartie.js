@@ -1,7 +1,5 @@
 
-function comparaisonNombrePourTri(a, b) {
-    return  b.score - a.score;
-}
+/* Zone calcul final*/
 function calculScore(partie){
     let valeurFinal = calsulScoreBase(partie);
     valeurFinal -= calculScoreMalusCoup(partie);
@@ -18,8 +16,13 @@ function calculScoreMalusTemps(partie){
     return Math.round(partie.timer);
 }
 
+//fnction pour le tri dans le tableau du classement
+function comparaisonNombrePourTri(a, b) {
+    return  b.score - a.score;
+}
 function ajoutAuClassement(){
 
+    //création classement (un tableau)
     if (!memory.classement){
         memory["classement"] =[];
     }
@@ -34,19 +37,10 @@ function ajoutAuClassement(){
             "score" : memory.partie.score
         }
 
-        if (memory.classement.length==0){
-            
-            memory.classement.push(scoreActuelle);
-        }
-        else{
-            if(memory.classement.length<10){
-                memory.classement.push(scoreActuelle);
-            }
-            else{
-                memory.classement.push(scoreActuelle);
-                memory.classement = memory.classement.sort(comparaisonNombrePourTri).slice(0, 10);
-            }
-        }
+        //ajoute le score au classement
+        memory.classement.push(scoreActuelle);
+        //garde les 10 meilleurs
+        memory.classement = memory.classement.sort(comparaisonNombrePourTri).slice(0, 10);
     }
     localStorage.setItem("memory",JSON.stringify(memory));
 }
@@ -113,7 +107,6 @@ function retourAuMenu(){
     //window.location.href = cheminMenu;
     window.location.replace(cheminMenu);
 }
-
 
 function start(){
     let étape =0;
