@@ -138,80 +138,141 @@ function choisirCarte(carte){
     vérifierNombreRetournée(true);
 }
 function retournerCarte(carte){
-    
-    //let img = carte.getElementsByTagName("img")[0];
+    let imageSrc = "../assets/dos-carte-chartreuse-1.png";
+    let image = new Image();
+    image.src = imageSrc;
+
+    let pourcentReel = image.width/image.height*100;
+    let vitesse = pourcentReel / 3.5;
+    let pourcent = pourcentReel;
+
 
     if(carte.getAttribute("class").includes("carteCachée")){
-        
-        let carteValeur = cartePosée[carte.id.replace("carte","")];
-
-        //img.src = "../assets/face-carte-chartreuse-1.png";
-
-        let p = document.createElement("p");
-        p.innerHTML = carteValeur.valeur;
-        
-        let img2 = document.createElement("img");
-        carte.appendChild(img2);
-        img2.setAttribute("class","couleur");
-        
-        switch(carteValeur.couleur){
-            case "coeur" :
-                if(carteValeur.valeur % 2 ==0){
-                    carte.insertBefore(p, carte.firstChild);
-                }
-                else{
-                    carte.appendChild(p);
-                    img2.style.transform = "scale(-1)";
-                }
-                img2.src = "../assets/coeur.png";
-                break;
-            case "pique" :
-                if(carteValeur.valeur % 2 ==0){
-                    carte.insertBefore(p, carte.firstChild);
-                    img2.style.transform = "scale(-1)";
-                }
-                else{
-                    carte.appendChild(p);
-                }
-                img2.src = "../assets/pique.png";
-                break;
-            case "carreau" :
-                if(carteValeur.valeur % 2 ==1){
-                    carte.insertBefore(p, carte.firstChild);
-                }
-                else{
-                    carte.appendChild(p);
-                }
-                img2.src = "../assets/carreau.png";
-                break;
-            case "trefle" :
-                if(carteValeur.valeur%2 ==1){
-                    carte.insertBefore(p, carte.firstChild);
-                    img2.style.transform = "scale(-1)";
-                }
-                else{
-                    carte.appendChild(p);
-                }
-                img2.src = "../assets/trefle.png";
-                break;
-        }
-        
         carte.setAttribute("class",carte.getAttribute("class").replace("carteCachée","carteRetournée"));
-        carte.style.backgroundImage = "url('../assets/face-carte-chartreuse-1.png')"; 
-        //img.style.left = ((window.innerWidth-450)/52.70+0.6)+"px";
+        let intervalAnimation = setInterval(()=>{
+            pourcent -=  vitesse;
+            carte.style.backgroundSize = pourcent+"% 100%";
+            if(pourcent <=0){
+                clearInterval(intervalAnimation);
+                
+                let carteValeur = cartePosée[carte.id.replace("carte","")];
+        
+                //img.src = "../assets/face-carte-chartreuse-1.png";
+        
+                let p = document.createElement("p");
+                p.innerHTML = carteValeur.valeur;
+                p.style.color = "rgb(255,255,255)";
+                
+                let img2 = document.createElement("img");
+                let tailleImage = 45;
+                carte.appendChild(img2);
+                img2.setAttribute("class","couleur");
+                img2.style.width = "0%";
+                
+                switch(carteValeur.couleur){
+                    case "coeur" :
+                        if(carteValeur.valeur % 2 ==0){
+                            carte.insertBefore(p, carte.firstChild);
+                        }
+                        else{
+                            carte.appendChild(p);
+                            img2.style.transform = "scale(-1)";
+                        }
+                        img2.src = "../assets/coeur.png";
+                        break;
+                    case "pique" :
+                        if(carteValeur.valeur % 2 ==0){
+                            carte.insertBefore(p, carte.firstChild);
+                            img2.style.transform = "scale(-1)";
+                        }
+                        else{
+                            carte.appendChild(p);
+                        }
+                        img2.src = "../assets/pique.png";
+                        break;
+                    case "carreau" :
+                        if(carteValeur.valeur % 2 ==1){
+                            carte.insertBefore(p, carte.firstChild);
+                        }
+                        else{
+                            carte.appendChild(p);
+                        }
+                        img2.src = "../assets/carreau.png";
+                        break;
+                    case "trefle" :
+                        if(carteValeur.valeur%2 ==1){
+                            carte.insertBefore(p, carte.firstChild);
+                            img2.style.transform = "scale(-1)";
+                        }
+                        else{
+                            carte.appendChild(p);
+                        }
+                        img2.src = "../assets/trefle.png";
+                        break;
+                }
+                
+                let green = 255;
+                let vertActuelle=green;
+                /**/
+                carte.style.backgroundImage = "url('../assets/face-carte-chartreuse-1.png')"; 
+                intervalAnimation = setInterval(()=>{
+                    pourcent += vitesse;
+                    carte.style.backgroundSize = pourcent+"% 100%";
+                    vertActuelle -= green/3.5;
+                    p.style.color = "rgb("+vertActuelle+","+vertActuelle+","+vertActuelle+")";
+
+                    img2.style.width =  Math.round(Number(img2.style.width.replace("%","")) + Number(tailleImage/3.5))+"%";
+                    img2.style.height = "45%";   
+                    if(pourcent >= pourcentReel){
+                        clearInterval(intervalAnimation);
+                        img2.style.width = "45%";
+                        p.style.color = "rgb(0,0,0)";
+                    }
+                },50);
+                //img.style.left = ((window.innerWidth-450)/52.70+0.6)+"px";
+            }
+        },50);        
     }
     else if (carte.getAttribute("class").includes("carteRetournée")){
-        //img.src = "../assets/dos-carte-chartreuse-1.png";
-
-        let p = carte.getElementsByTagName("p")[0];
-        carte.removeChild(carte.getElementsByTagName("img")[0]);
-        carte.removeChild(p);
-        
         carte.setAttribute("class",carte.getAttribute("class").replace("carteRetournée","carteCachée"));
-        carte.style.backgroundImage = "url('../assets/dos-carte-chartreuse-1.png')"; 
-    }
+        //tentative de faire changer la taille du texte
+        let p = carte.getElementsByTagName("p")[0];
+        let psize = 50;
+        p.style.fontSize = psize;
 
+        let img = carte.querySelector('img');
+        let tailleImage = 45;
+
+        let green = 255;
+        let vertActuelle=0;
+
+        let intervalAnimation = setInterval(()=>{
+            pourcent -=  vitesse;
+            carte.style.backgroundSize = pourcent+"% 100%";
+            //tentative de faire changer la taille du texte
+            vertActuelle = vertActuelle + green/3.5;
+            p.style.color = "rgb("+Math.round(vertActuelle)+","+Math.round(vertActuelle)+","+Math.round(vertActuelle)+")";
+
+            img.style.width =  Math.round(Number(img.style.width.replace("%","")) - Number(tailleImage/3.5))+"%";
+            img.style.height = "45%";
+            if(pourcent <=0){
+                clearInterval(intervalAnimation);
+                carte.removeChild(carte.querySelector('img'));
+                carte.removeChild(p);
+                
+                carte.style.backgroundImage = "url('../assets/dos-carte-chartreuse-1.png')"; 
+                intervalAnimation = setInterval(()=>{
+                    pourcent += vitesse;
+                    carte.style.backgroundSize = pourcent+"% 100%";
+                    if(pourcent >= pourcentReel){
+                        clearInterval(intervalAnimation);
+                    }
+                },50);
+            }
+        },50);
+    }
 }
+
 function vérifierNombreRetournée(checkVictoire){
     let retournée = document.getElementsByClassName("carteRetournée");
     if(retournée.length==2){
