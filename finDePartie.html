@@ -13,10 +13,12 @@
 
         </tbody>
     </table>
-    <form id="demandePseudo" style="visibility: hidden;">
-        <h1>ok</h1>
-        <input type="submit">
+    <form id="demandePseudo" style="visibility: hidden;"  onsubmit="return validerPseudo()">
+        <label for="pseudo">Entrez votre pseudo ici :</label>
+        <input id="inputPseudo" type="text" placeholder="pseudo">
+        <input type="submit" value="valider">
     </form>
+    <button id="retourMenu" style="visibility: hidden;" onclick="retourAuMenu()">Retour au menu</button>
 
     <script src="./scripts/finDePartie.js"></script>
 </body>
