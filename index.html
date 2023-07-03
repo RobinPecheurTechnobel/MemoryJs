@@ -7,28 +7,34 @@
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <main>
-        <h1>Memory Game</h1>
-        <p>Une série de carte vont vous être présentée face cachée.
-            Á vous de retrouver les paires qui y sont dissimulées.
-            Le temps que vous prenez et le nombre de coup joué seront pris en compte dans le score final.
-        </p>
-        <h2>Jouer?</h2>
-        <div class="flex-horizontal">
-            <button onclick="goGame(0)">Facile</button>
-            <button onclick="goGame(1)">Normal</button>
-            <button onclick="goGame(2)">Difficile</button>
-        </div>
-        <h2>High Score</h2>
-        <div id="zoneClassement">
-            <table id="classement">
-                <thead>
-                    <td>Pseudo</td>
-                    <td>Score</td>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+    <main class="flex-vertical centrer">
+        <section>
+            <h1>Memory Game</h1>
+            <p>Une série de carte vont vous être présentée face cachée.
+                Á vous de retrouver les paires qui y sont dissimulées.
+                Le temps que vous prenez et le nombre de coup joué seront pris en compte dans le score final.
+            </p>
+        </section>
+        <section>
+            <h2>Jouer?</h2>
+            <div class="flex-horizontal">
+                <button onclick="goGame(0)">Facile</button>
+                <button onclick="goGame(1)">Normal</button>
+                <button onclick="goGame(2)">Difficile</button>
+            </div>
+        </section>
+        <section>
+            <h2>High Score</h2>
+            <div id="zoneClassement" class="take-space">
+                <table id="classement">
+                    <thead>
+                        <td>Pseudo</td>
+                        <td>Score</td>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
     </main>
     <script src="./scripts/main.js"></script>
 </body>

@@ -7,19 +7,27 @@
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <h1>Fin de partie</h1>
-    <table>
-        <tbody id="détails">
-
-        </tbody>
-    </table>
-    <form id="demandePseudo" style="visibility: hidden;"  onsubmit="return validerPseudo()">
-        <label for="pseudo">Entrez votre pseudo ici :</label>
-        <input id="inputPseudo" type="text" placeholder="pseudo">
-        <input type="submit" value="valider">
-    </form>
-    <button id="retourMenu" style="visibility: hidden;" onclick="retourAuMenu()">Retour au menu</button>
-
+    <main class="flex-vertical centrer">
+        <section class="take-space">
+            <h1>Fin de partie</h1>
+            <table id="tableDétails">
+                <tbody id="détails">
+        
+                </tbody>
+            </table>
+        </section>
+        <section id="zoneDemandePseudo" style="visibility: hidden;">
+            <h2>Votre score peut rentrer dans le classement!</h2>
+            <form id="demandePseudo"  onsubmit="return validerPseudo()">
+                <label for="pseudo">Entrez votre pseudo ici :</label>
+                <input id="inputPseudo" type="text" placeholder="pseudo">
+                <input type="submit" value="valider">
+            </form>
+        </section>
+        <section id="retourMenu" style="visibility: hidden;">
+            <button onclick="retourAuMenu()">Retour au menu</button>
+        </section>
+    </main>
     <script src="./scripts/finDePartie.js"></script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 main{
     max-width: 100%;
 }
+.centrer{
+    text-align: center;
+}
 
 @media all and ( min-width: 600px) {
     main{
@@ -8,6 +11,16 @@ main{
         margin-left: auto;
         margin-right: auto;
     }
+}
+.flex-vertical{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 3em;
+}
+.flex-vertical section{
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .flex-horizontal{
     display:flex;
@@ -18,11 +31,24 @@ main{
     flex-direction: row;
     justify-content: space-around;
 }
-.take-space  div{
+.take-space  div,
+.take-space table{
     width: 100%;
 }
 .flex-horizontal button, .flex-horizontal-espace button{
     width: 100%;
+}
+
+thead{
+    font-size: 25px;
+    font-weight: 200;
+}
+#tableDétails{
+    width: 50%;
+    margin: auto;
+}
+#détails td{
+    width: 50%;
 }
 .carte{
     height: 150px;
