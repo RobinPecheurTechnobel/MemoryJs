@@ -119,13 +119,14 @@ function affichageCarte(){
         let carte = document.createElement("div");
         carte.id = "carte"+i;
         carte.setAttribute("class","carte carteCachée");
+        carte.style.backgroundImage = "url('../assets/dos-carte-chartreuse-1.png')"; 
         carte.setAttribute("onclick", "choisirCarte("+carte.id+")");
         rangée.appendChild(carte);
-
+/*
         let img = document.createElement("img");
         carte.appendChild(img);
         img.src = "../assets/dos-carte-chartreuse-1.png";
-        img.setAttribute("class","imageDeFond");
+        img.setAttribute("class","imageDeFond");/**/
     }
 }
 function choisirCarte(carte){
@@ -138,24 +139,24 @@ function choisirCarte(carte){
 }
 function retournerCarte(carte){
     
-    let img = carte.getElementsByTagName("img")[0];
+    //let img = carte.getElementsByTagName("img")[0];
 
     if(carte.getAttribute("class").includes("carteCachée")){
         
         let carteValeur = cartePosée[carte.id.replace("carte","")];
 
-        img.src = "../assets/face-carte-chartreuse-1.png";
+        //img.src = "../assets/face-carte-chartreuse-1.png";
 
         let p = document.createElement("p");
         p.innerHTML = carteValeur.valeur;
         
         let img2 = document.createElement("img");
-        img.parentElement.appendChild(img2);
+        carte.appendChild(img2);
         img2.setAttribute("class","couleur");
         
         switch(carteValeur.couleur){
             case "coeur" :
-                if(carteValeur.valeur%2 ==0){
+                if(carteValeur.valeur % 2 ==0){
                     carte.insertBefore(p, carte.firstChild);
                 }
                 else{
@@ -165,7 +166,7 @@ function retournerCarte(carte){
                 img2.src = "../assets/coeur.png";
                 break;
             case "pique" :
-                if(carteValeur.valeur%2 ==0){
+                if(carteValeur.valeur % 2 ==0){
                     carte.insertBefore(p, carte.firstChild);
                     img2.style.transform = "scale(-1)";
                 }
@@ -175,7 +176,7 @@ function retournerCarte(carte){
                 img2.src = "../assets/pique.png";
                 break;
             case "carreau" :
-                if(carteValeur.valeur%2 ==1){
+                if(carteValeur.valeur % 2 ==1){
                     carte.insertBefore(p, carte.firstChild);
                 }
                 else{
@@ -196,16 +197,18 @@ function retournerCarte(carte){
         }
         
         carte.setAttribute("class",carte.getAttribute("class").replace("carteCachée","carteRetournée"));
-        img.style.left = ((window.innerWidth-450)/52.70+0.6)+"px";
+        carte.style.backgroundImage = "url('../assets/face-carte-chartreuse-1.png')"; 
+        //img.style.left = ((window.innerWidth-450)/52.70+0.6)+"px";
     }
     else if (carte.getAttribute("class").includes("carteRetournée")){
-        img.src = "../assets/dos-carte-chartreuse-1.png";
+        //img.src = "../assets/dos-carte-chartreuse-1.png";
 
         let p = carte.getElementsByTagName("p")[0];
-        carte.removeChild(carte.getElementsByTagName("img")[1]);
+        carte.removeChild(carte.getElementsByTagName("img")[0]);
         carte.removeChild(p);
         
         carte.setAttribute("class",carte.getAttribute("class").replace("carteRetournée","carteCachée"));
+        carte.style.backgroundImage = "url('../assets/dos-carte-chartreuse-1.png')"; 
     }
 
 }

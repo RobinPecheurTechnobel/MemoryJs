@@ -49,8 +49,17 @@ main{
     max-width : 45%;
     margin : auto;
 }
-.carteRetournée .imageDeFond,
-.paireTrouvée .imageDeFond{
-    position: absolute;
-    z-index: -1;
+.carteCachée{
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: contain;
+}
+.carteRetournée,
+.paireTrouvée{
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: contain;
+
 }
