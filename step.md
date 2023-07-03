@@ -66,6 +66,10 @@ confort de navigation:
 .Remettre un boutton de retour au menu
 => pas de calcul de score
 
+placeholder:
+.gestion d'un classement vide'
+.gestion des tentative d'entrée un pesudo vide
+
 animation:
 .animation du retournement des cartes
 
@@ -74,3 +78,6 @@ design:
 
 préférence:
 .gérer le choix des dos de cartes
+
+Calcul de score:
+.réflexion sur le calcul du score final
