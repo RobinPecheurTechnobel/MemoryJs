@@ -12,11 +12,14 @@ main{
         margin-right: auto;
     }
 }
+section img{
+    height: 150px;
+}
 .flex-vertical{
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    row-gap: 3em;
+    row-gap: 2em;
 }
 .flex-vertical section{
     margin-top: auto;

@@ -100,6 +100,8 @@ function mélangéCarte(){
     }
 }
 function affichageCarte(){
+
+
     let zoneDeJeu = document.getElementById("jeu");
     let limiteParRangée = 4;
     if(cartePosée.length>=32){
@@ -119,7 +121,11 @@ function affichageCarte(){
         let carte = document.createElement("div");
         carte.id = "carte"+i;
         carte.setAttribute("class","carte carteCachée");
-        carte.style.backgroundImage = "url('../assets/dos-carte-chartreuse-1.png')"; 
+        
+        let memoryImagePréférence = JSON.parse(localStorage.getItem("memory")).préférence;
+        let imageDosSrc = memoryImagePréférence.dos;
+
+        carte.style.backgroundImage = "url('"+imageDosSrc+"')"; 
         carte.setAttribute("onclick", "choisirCarte("+carte.id+")");
         rangée.appendChild(carte);
 /*
@@ -138,9 +144,13 @@ function choisirCarte(carte){
     vérifierNombreRetournée(true);
 }
 function retournerCarte(carte){
-    let imageSrc = "../assets/dos-carte-chartreuse-1.png";
+
+    let memoryImagePréférence = JSON.parse(localStorage.getItem("memory")).préférence;
+    let imageDosSrc = memoryImagePréférence.dos;
+    let imageFaceSrc = memoryImagePréférence.face;
+
     let image = new Image();
-    image.src = imageSrc;
+    image.src = imageDosSrc;
 
     let pourcentReel = image.width/image.height*100;
     let vitesse = pourcentReel / 3.5;
@@ -214,7 +224,7 @@ function retournerCarte(carte){
                 let green = 255;
                 let vertActuelle=green;
                 /**/
-                carte.style.backgroundImage = "url('../assets/face-carte-chartreuse-1.png')"; 
+                carte.style.backgroundImage = "url('"+imageFaceSrc+"')"; 
                 intervalAnimation = setInterval(()=>{
                     pourcent += vitesse;
                     carte.style.backgroundSize = pourcent+"% 100%";
@@ -260,7 +270,7 @@ function retournerCarte(carte){
                 carte.removeChild(carte.querySelector('img'));
                 carte.removeChild(p);
                 
-                carte.style.backgroundImage = "url('../assets/dos-carte-chartreuse-1.png')"; 
+                carte.style.backgroundImage = "url('"+imageDosSrc+"')"; 
                 intervalAnimation = setInterval(()=>{
                     pourcent += vitesse;
                     carte.style.backgroundSize = pourcent+"% 100%";
@@ -308,6 +318,7 @@ function start(){
 let paireTrouvée;
 let nombreCoup;
 let memory = JSON.parse(localStorage.getItem("memory"));
+console.log(memory);
 let startTimer = new Date();
 let refreshTimer = setInterval(
     () =>{
