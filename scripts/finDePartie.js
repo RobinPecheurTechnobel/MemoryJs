@@ -105,7 +105,6 @@ function validerPseudo(){
     let memory = JSON.parse(localStorage.getItem("memory"));
 
     let pseudo = document.forms["demandePseudo"]["inputPseudo"].value;
-    console.log(pseudo);
     if(!pseudo || pseudo == ""){
         document.forms["demandePseudo"]["inputPseudo"].placeholder = "ça manque de valeur"
     }

@@ -188,7 +188,7 @@ function retournerCarte(carte){
                             carte.appendChild(p);
                             img2.style.transform = "scale(-1)";
                         }
-                        img2.src = "../assets/coeur.png";
+                        img2.src = "../assets/formes/coeur.png";
                         break;
                     case "pique" :
                         if(carteValeur.valeur % 2 ==0){
@@ -198,7 +198,7 @@ function retournerCarte(carte){
                         else{
                             carte.appendChild(p);
                         }
-                        img2.src = "../assets/pique.png";
+                        img2.src = "../assets/formes/pique.png";
                         break;
                     case "carreau" :
                         if(carteValeur.valeur % 2 ==1){
@@ -207,7 +207,7 @@ function retournerCarte(carte){
                         else{
                             carte.appendChild(p);
                         }
-                        img2.src = "../assets/carreau.png";
+                        img2.src = "../assets/formes/carreau.png";
                         break;
                     case "trefle" :
                         if(carteValeur.valeur%2 ==1){
@@ -217,7 +217,7 @@ function retournerCarte(carte){
                         else{
                             carte.appendChild(p);
                         }
-                        img2.src = "../assets/trefle.png";
+                        img2.src = "../assets/formes/trefle.png";
                         break;
                 }
                 
@@ -318,7 +318,6 @@ function start(){
 let paireTrouvée;
 let nombreCoup;
 let memory = JSON.parse(localStorage.getItem("memory"));
-console.log(memory);
 let startTimer = new Date();
 let refreshTimer = setInterval(
     () =>{
