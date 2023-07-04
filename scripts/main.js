@@ -140,5 +140,14 @@ function dosCartePreference(){
         }
     });
 }
+function start(){
+    
+    let memory = JSON.parse(localStorage.getItem("memory"));
+    if(memory && memory.préférence){
+        document.getElementById("dosDeCarte").src = memory.préférence.dos;
+    }
 
-replissageClassment();
+    replissageClassement();
+}
+
+start();

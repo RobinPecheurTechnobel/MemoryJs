@@ -106,7 +106,13 @@ function validerPseudo(){
 
     let pseudo = document.forms["demandePseudo"]["inputPseudo"].value;
     if(!pseudo || pseudo == ""){
-        document.forms["demandePseudo"]["inputPseudo"].placeholder = "ça manque de valeur"
+        let random = Math.floor(Math.random() * 2);
+        if(random ==0){
+            document.forms["demandePseudo"]["inputPseudo"].placeholder = "ça manque de valeur";
+        }
+        else{
+            document.forms["demandePseudo"]["inputPseudo"].placeholder = "Pas d'anonymous ici!";
+        }
     }
     else{
         memory.partie["pseudo"] = pseudo;

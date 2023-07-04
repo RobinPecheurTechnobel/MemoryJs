@@ -40,7 +40,9 @@ function majPaireTrouvée(value){
         memory["partie"]["timer"] = timer(stopTimer);
         memory["partie"]["score"] = 0;
         localStorage.setItem("memory", JSON.stringify(memory));
-        window.location.href = "/finDePartie.html";
+        setTimeout(()=>{
+            window.location.href = "/finDePartie.html";
+        },1000);
     }
 }
 
@@ -82,7 +84,7 @@ function préparerPaquet(){
         }
     }
 }
-function mélangéCarte(){
+function mélangerCarte(){
     let listeCarteRestantePaquet =[];
     let indiceDisponible = [];
     for(let i = 0; i < paquet.length; i++){
@@ -100,8 +102,6 @@ function mélangéCarte(){
     }
 }
 function affichageCarte(){
-
-
     let zoneDeJeu = document.getElementById("jeu");
     let limiteParRangée = 4;
     if(cartePosée.length>=32){
@@ -128,11 +128,6 @@ function affichageCarte(){
         carte.style.backgroundImage = "url('"+imageDosSrc+"')"; 
         carte.setAttribute("onclick", "choisirCarte("+carte.id+")");
         rangée.appendChild(carte);
-/*
-        let img = document.createElement("img");
-        carte.appendChild(img);
-        img.src = "../assets/dos-carte-chartreuse-1.png";
-        img.setAttribute("class","imageDeFond");/**/
     }
 }
 function choisirCarte(carte){
@@ -145,9 +140,9 @@ function choisirCarte(carte){
 }
 function retournerCarte(carte){
 
-    let memoryImagePréférence = JSON.parse(localStorage.getItem("memory")).préférence;
-    let imageDosSrc = memoryImagePréférence.dos;
-    let imageFaceSrc = memoryImagePréférence.face;
+    let memoryPréférence = JSON.parse(localStorage.getItem("memory")).préférence;
+    let imageDosSrc = memoryPréférence.dos;
+    let imageFaceSrc = memoryPréférence.face;
 
     let image = new Image();
     image.src = imageDosSrc;
@@ -308,7 +303,7 @@ function changeClassCarte(carte,classeAvant,classeAprès){
 }
 function start(){
     préparerPaquet();
-    mélangéCarte();
+    mélangerCarte();
     affichageCarte();
     majNbCoup(0);
     majPaireTrouvée(0);
