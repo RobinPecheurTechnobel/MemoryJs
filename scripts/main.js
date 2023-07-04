@@ -36,12 +36,16 @@ function createMemory(){
     return memory;
 }
 function createMemoryPreference(){
-    let image = document.getElementById("dosDeCarte");
-    let urlDos = image.src.substring(image.src.indexOf("/asset"),image.src.length);
+    let imageDos = document.getElementById("dosDeCarte");
+    let urlDos = imageDos.src.substring(imageDos.src.indexOf("/asset"),imageDos.src.length);
+
+    let imageForme = document.getElementById("formeCarte");
+    let forme = imageForme.src.split("/formes/")[1].split(".gif")[0];
 
     let préférence = {
-        "dos":".."+urlDos, 
-        "face":".."+urlDos.replace("dos","face").replace("gif","png")
+        "dos" : ".."+urlDos, 
+        "face" : ".."+urlDos.replace("dos","face").replace("gif","png"),
+        "forme" : forme
     };
     return préférence;
 }
@@ -60,38 +64,6 @@ function  goGame(difficulté){
     localStorage.setItem("memory",JSON.stringify(memory));
 
     window.location.href = "/memory.html";
-}
-
-function replissageClassment(){
-    
-    let memory = createMemory();
-    
-    let tableauClassement = document.getElementById("classement");
-    if(!memory.classement || classement.length == 0){
-        let zoneClassement = document.getElementById("zoneClassement");
-        zoneClassement.removeChild(tableauClassement);
-        
-        let p = document.createElement("p");
-        zoneClassement.appendChild(p)
-        p.innerHTML = "Il n'y a pas encore de score enregistré.";
-    }
-    else{
-        tbody = tableauClassement.getElementsByTagName("tbody")[0];
-        let classement = memory.classement;
-
-        for (const valeur of classement) {
-            let tr = document.createElement("tr");
-            tableauClassement.appendChild(tr);
-            
-            let td1 = document.createElement("td");
-            tr.appendChild(td1);
-            td1.innerHTML = valeur.pseudo;
-            
-            let td2 = document.createElement("td");
-            tr.appendChild(td2);
-            td2.innerHTML = valeur.score;
-        }
-    }
 }
 function dosCartePreference(){
 
@@ -139,6 +111,55 @@ function dosCartePreference(){
             localStorage.setItem("memory",JSON.stringify(memory));
         }
     });
+}
+function formePreference(){
+    
+    let imageForme = document.getElementById("formeCarte");
+    let indexForme = imageForme.src.split("/formes/")[1].split("forme")[1].split(".gif")[0];
+    let url = imageForme.src.replace("forme"+indexForme,"forme"+(Number(indexForme)+1));
+    checkIfImageExists(url,(exists)=>{
+        if(exists){
+            imageForme.src = url;
+            createMemory();
+        }
+        else{
+            url = imageForme.src.replace("forme"+indexForme,"forme1");
+            imageForme.src = url;
+            createMemory();
+        }
+    });
+}
+
+function replissageClassement(){
+    
+    let memory = createMemory();
+    
+    let tableauClassement = document.getElementById("classement");
+    if(!memory.classement || classement.length == 0){
+        let zoneClassement = document.getElementById("zoneClassement");
+        zoneClassement.removeChild(tableauClassement);
+        
+        let p = document.createElement("p");
+        zoneClassement.appendChild(p)
+        p.innerHTML = "Il n'y a pas encore de score enregistré.";
+    }
+    else{
+        tbody = tableauClassement.getElementsByTagName("tbody")[0];
+        let classement = memory.classement;
+
+        for (const valeur of classement) {
+            let tr = document.createElement("tr");
+            tableauClassement.appendChild(tr);
+            
+            let td1 = document.createElement("td");
+            tr.appendChild(td1);
+            td1.innerHTML = valeur.pseudo;
+            
+            let td2 = document.createElement("td");
+            tr.appendChild(td2);
+            td2.innerHTML = valeur.score;
+        }
+    }
 }
 function start(){
     

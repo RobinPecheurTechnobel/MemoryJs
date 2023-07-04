@@ -66,20 +66,7 @@ function préparerPaquet(){
         for(let couleur = 0; couleur<maxCouleur;couleur++){
             let carte = { "couleur" : "0"};
             carte.valeur = valeur+1;
-            switch(couleur){
-                case 0 :
-                    carte.couleur = "coeur";
-                    break;
-                case 1 :
-                    carte.couleur = "pique";
-                    break;
-                case 2 :
-                    carte.couleur = "carreau";
-                    break;
-                case 3 :
-                    carte.couleur = "trefle";
-                    break;
-            }
+            carte.couleur = couleur;
             paquet.push(carte);
         }
     }
@@ -174,8 +161,14 @@ function retournerCarte(carte){
                 img2.setAttribute("class","couleur");
                 img2.style.width = "0%";
                 
+                
+                let forme = "forme1";
+                if(memoryPréférence.forme){
+                    forme = memoryPréférence.forme;
+                }
+
                 switch(carteValeur.couleur){
-                    case "coeur" :
+                    case 0 :
                         if(carteValeur.valeur % 2 ==0){
                             carte.insertBefore(p, carte.firstChild);
                         }
@@ -183,9 +176,9 @@ function retournerCarte(carte){
                             carte.appendChild(p);
                             img2.style.transform = "scale(-1)";
                         }
-                        img2.src = "../assets/formes/coeur.png";
+                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
                         break;
-                    case "pique" :
+                    case 1 :
                         if(carteValeur.valeur % 2 ==0){
                             carte.insertBefore(p, carte.firstChild);
                             img2.style.transform = "scale(-1)";
@@ -193,18 +186,18 @@ function retournerCarte(carte){
                         else{
                             carte.appendChild(p);
                         }
-                        img2.src = "../assets/formes/pique.png";
+                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
                         break;
-                    case "carreau" :
+                    case 2 :
                         if(carteValeur.valeur % 2 ==1){
                             carte.insertBefore(p, carte.firstChild);
                         }
                         else{
                             carte.appendChild(p);
                         }
-                        img2.src = "../assets/formes/carreau.png";
+                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
                         break;
-                    case "trefle" :
+                    case 3 :
                         if(carteValeur.valeur%2 ==1){
                             carte.insertBefore(p, carte.firstChild);
                             img2.style.transform = "scale(-1)";
@@ -212,7 +205,7 @@ function retournerCarte(carte){
                         else{
                             carte.appendChild(p);
                         }
-                        img2.src = "../assets/formes/trefle.png";
+                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
                         break;
                 }
                 
