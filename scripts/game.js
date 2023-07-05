@@ -1,14 +1,15 @@
 /*zone header*/
-function chrono(value){
+function chrono(tempDeFin){
     let zoneDeTemps = document.getElementById("chrono");
-    if(value){
+    if(tempDeFin){
         clearInterval(refreshTimer);
-        zoneDeTemps.innerHTML = timer(value);
+        zoneDeTemps.innerHTML = tempPassé(tempDeFin);
     }else{
-        zoneDeTemps.innerHTML = timer(new Date());
+        zoneDeTemps.innerHTML = tempPassé(new Date());
     }
 }
-function timer(final){
+function tempPassé(final){
+    //temps entre la valeur "final" et le startTimer (depuis l'arrivée sur cette page) en seconde
     return Math.round((final - startTimer) / 1000);
 }
 function majNbCoup(value){
@@ -27,7 +28,9 @@ function majPaireTrouvée(value){
     else{
         paireTrouvée++;
     }
+    //Affichage
     document.getElementById("paires").innerHTML = paireTrouvée + " / " + paquet.length;
+
     //Condition de fin de partie
     if(paireTrouvée == paquet.length){
         let stopTimer = new Date();
@@ -37,7 +40,7 @@ function majPaireTrouvée(value){
         }
         memory["partie"]["paire"] = paireTrouvée
         memory["partie"]["coups"] = nombreCoup;
-        memory["partie"]["timer"] = timer(stopTimer);
+        memory["partie"]["timer"] = tempPassé(stopTimer);
         memory["partie"]["score"] = 0;
         localStorage.setItem("memory", JSON.stringify(memory));
         setTimeout(()=>{
@@ -47,6 +50,30 @@ function majPaireTrouvée(value){
 }
 
 /* zone fonctionnalité du memory */
+function vérifierNombreRetournée(checkVictoire){
+    let retournée = document.getElementsByClassName("carteRetournée");
+    if(retournée.length == 2){
+        id1 = retournée[0].id;
+        id2 = retournée[1].id;  
+        if(cartePosée[id1.replace("carte","")].valeur == cartePosée[id2.replace("carte","")].valeur &&
+        cartePosée[id1.replace("carte","")].couleur == cartePosée[id2.replace("carte","")].couleur){
+            majPaireTrouvée();
+            changeClassCarte(retournée[1],"carteRetournée","paireTrouvée");
+            changeClassCarte(retournée[0],"carteRetournée","paireTrouvée");
+        }
+        else{
+            if(!checkVictoire){
+                retournerCarte(retournée[1]);
+                retournerCarte(retournée[0]);
+            }
+        }
+    }
+}
+function changeClassCarte(carte,classeAvant,classeAprès){
+    carte.setAttribute("class",carte.getAttribute("class").replace(classeAvant,classeAprès));
+
+}
+/*procédure concernant le retournement des cartes*/
 function retournerCarteCacher(carte, tempsAnimation, interinterval){
     let memoryPréférence = memory.préférence;
     let imageDosSrc = memoryPréférence.dos;
@@ -253,7 +280,8 @@ function retournerCarteRevéler(carte, tempsAnimation, interinterval){
                 else{
                     img2.style.width = maxWidth;
                 }
-                img2.style.height = "45%";   
+                img2.style.height = "45%"; 
+
                 if(pourcent >= pourcentReel){
                     clearInterval(intervalAnimation);
                     img2.style.width = maxWidth + "%";
@@ -274,7 +302,7 @@ function retournerCarte(carte){
         retournerCarteCacher(carte, tempsAnimation, interinterval);
     }
 }
-
+/*procédure déclencheur d'action depuis un clique sur une carte*/
 function choisirCarte(carte){
     vérifierNombreRetournée();
     if(!carte.getAttribute("class").includes("paireTrouvée")){
@@ -283,7 +311,7 @@ function choisirCarte(carte){
     retournerCarte(carte);
     vérifierNombreRetournée(true);
 }
-
+/*première gestion paquet*/
 function préparerPaquet(){
     let maxCouleur = 0;
     let maxValeur = 4;
@@ -368,31 +396,7 @@ function affichageCarte(){
         image.onload = () => {}
     }
 }
-
-
-function vérifierNombreRetournée(checkVictoire){
-    let retournée = document.getElementsByClassName("carteRetournée");
-    if(retournée.length == 2){
-        id1 = retournée[0].id;
-        id2 = retournée[1].id;  
-        if(cartePosée[id1.replace("carte","")].valeur == cartePosée[id2.replace("carte","")].valeur &&
-        cartePosée[id1.replace("carte","")].couleur == cartePosée[id2.replace("carte","")].couleur){
-            majPaireTrouvée();
-            changeClassCarte(retournée[1],"carteRetournée","paireTrouvée");
-            changeClassCarte(retournée[0],"carteRetournée","paireTrouvée");
-        }
-        else{
-            if(!checkVictoire){
-                retournerCarte(retournée[1]);
-                retournerCarte(retournée[0]);
-            }
-        }
-    }
-}
-function changeClassCarte(carte,classeAvant,classeAprès){
-    carte.setAttribute("class",carte.getAttribute("class").replace(classeAvant,classeAprès));
-
-}
+/*départ*/
 function start(){
     préparerPaquet();
     mélangerCarte();
