@@ -89,8 +89,11 @@ function mélangerCarte(){
     }
 }
 function affichageCarte(){
+    
+    let memoryPréférence = memory.préférence;
     let zoneDeJeu = document.getElementById("jeu");
     let limiteParRangée = 4;
+
     if(cartePosée.length>=32){
         limiteParRangée =8;
     }
@@ -109,12 +112,23 @@ function affichageCarte(){
         carte.id = "carte"+i;
         carte.setAttribute("class","carte carteCachée");
         
-        let memoryImagePréférence = JSON.parse(localStorage.getItem("memory")).préférence;
-        let imageDosSrc = memoryImagePréférence.dos;
+        let imageDosSrc = memoryPréférence.dos;
 
         carte.style.backgroundImage = "url('"+imageDosSrc+"')"; 
         carte.setAttribute("onclick", "choisirCarte("+carte.id+")");
         rangée.appendChild(carte);
+    }
+
+    //chargement rapide des images
+    //!important pour les effets
+    let forme = "forme1";
+    if(memoryPréférence.forme){
+        forme = memoryPréférence.forme;
+    }
+    for(let i = 0 ; i < 4 ; i++){
+        let image = new Image();
+        image.src = "../assets/formes/"+forme+i+".png";
+        image.onload = () => {}
     }
 }
 function choisirCarte(carte){
@@ -125,114 +139,194 @@ function choisirCarte(carte){
     retournerCarte(carte);
     vérifierNombreRetournée(true);
 }
-function retournerCarte(carte){
+function retournerCarteRevéler(carte, tempsAnimation, interinterval ,memoryPréférence){
 
-    let memoryPréférence = JSON.parse(localStorage.getItem("memory")).préférence;
     let imageDosSrc = memoryPréférence.dos;
     let imageFaceSrc = memoryPréférence.face;
 
+    //pour l'image en fond (dos ou face de carte)
     let image = new Image();
     image.src = imageDosSrc;
 
     let pourcentReel = image.width/image.height*100;
-    let vitesse = pourcentReel / 3.5;
+    let vitesse = pourcentReel / (tempsAnimation/interinterval);
+    let pourcent = pourcentReel;
+    
+    carte.setAttribute("class",carte.getAttribute("class").replace("carteCachée","carteRetournée"));
+    let intervalAnimation = setInterval(()=>{
+        pourcent -=  vitesse;
+        carte.style.backgroundSize = pourcent+"% 100%";
+        if(pourcent <=0){
+            clearInterval(intervalAnimation);
+            
+            let carteValeur = cartePosée[carte.id.replace("carte","")];
+    
+            //img.src = "../assets/face-carte-chartreuse-1.png";
+    
+            let p = document.createElement("p");
+            p.innerHTML = carteValeur.valeur;
+            p.style.color = "rgb(255,255,255)";
+            
+            let img2 = document.createElement("img");
+            carte.appendChild(img2);
+            img2.setAttribute("class","couleur");
+            img2.style.width = "0%";
+            
+            
+            let forme = "forme1";
+            if(memoryPréférence.forme){
+                forme = memoryPréférence.forme;
+            }
+
+            let src;
+            image = new Image();
+
+            switch(carteValeur.couleur){
+                case 0 :
+                    if(carteValeur.valeur % 2 ==0){
+                        carte.insertBefore(p, carte.firstChild);
+
+                        p.style.marginBottom = "0px";
+                        p.style.marginTop = "auto";
+
+                        img2.style.marginBottom = "auto";
+                        img2.style.marginTop = "0px";
+                    }
+                    else{
+                        carte.appendChild(p);
+
+                        p.style.marginBottom = "auto";
+                        p.style.marginTop = "0px";
+
+                        if(forme!=="forme3"){
+                            img2.style.transform = "scale(-1)";
+                        }
+                        img2.style.marginBottom = "0px";
+                        img2.style.marginTop = "auto";
+                    }
+                    src = "../assets/formes/"+forme+carteValeur.couleur+".png";
+                    img2.src = src;
+                    image.src = src;
+                    break;
+                case 1 :
+                    if(carteValeur.valeur % 2 ==0){
+                        carte.insertBefore(p, carte.firstChild);
+
+                        p.style.marginBottom = "0px";
+                        p.style.marginTop = "auto";
+                        
+                        if(forme!=="forme3"){
+                            img2.style.transform = "scale(-1)";
+                        }
+                        img2.style.marginBottom = "auto";
+                        img2.style.marginTop = "0px";
+                    }
+                    else{
+                        carte.appendChild(p);
+
+                        p.style.marginBottom = "auto";
+                        p.style.marginTop = "0px";
+
+                        img2.style.marginBottom = "0px";
+                        img2.style.marginTop = "auto";
+                    }
+                    src = "../assets/formes/"+forme+carteValeur.couleur+".png";
+                    img2.src = src;
+                    image.src = src;
+                    break;
+                case 2 :
+                    if(carteValeur.valeur % 2 ==1){
+                        carte.insertBefore(p, carte.firstChild);
+
+                        p.style.marginBottom = "0px";
+                        p.style.marginTop = "auto";
+
+                        if(forme!=="forme3"){
+                            img2.style.transform = "scale(-1)";
+                        }
+                        img2.style.marginBottom = "auto";
+                        img2.style.marginTop = "0px";
+                    }
+                    else{
+                        carte.appendChild(p);
+
+                        p.style.marginBottom = "auto";
+                        p.style.marginTop = "0px";
+
+                        img2.style.marginBottom = "0px";
+                        img2.style.marginTop = "auto";
+                    }
+                    src = "../assets/formes/"+forme+carteValeur.couleur+".png";
+                    img2.src = src;
+                    image.src = src;
+                    break;
+                case 3 :
+                    if(carteValeur.valeur%2 ==1){
+                        carte.insertBefore(p, carte.firstChild);
+
+                        p.style.marginBottom = "0px";
+                        p.style.marginTop = "auto";
+
+                        if(forme!=="forme3"){
+                            img2.style.transform = "scale(-1)";
+                        }
+                        img2.style.marginBottom = "auto";
+                        img2.style.marginTop = "0px";
+                    }
+                    else{
+                        carte.appendChild(p);
+
+                        p.style.marginBottom = "auto";
+                        p.style.marginTop = "0px";
+
+                        img2.style.marginBottom = "0px";
+                        img2.style.marginTop = "auto";
+                    }
+                    src = "../assets/formes/"+forme+carteValeur.couleur+".png";
+                    img2.src = src;
+                    image.src = src;
+                    break;
+            }
+            
+            //couleur pour la font de la valeur
+            let green = 255;
+            let vertActuelle=green;
+
+            let maxWidth = (image.width)/(image.height/45);
+
+            /**/
+            carte.style.backgroundImage = "url('"+imageFaceSrc+"')"; 
+            intervalAnimation = setInterval(()=>{
+                pourcent += vitesse;
+                carte.style.backgroundSize = pourcent+"% 100%";
+                vertActuelle -= green/(tempsAnimation/interinterval);
+                p.style.color = "rgb("+vertActuelle+","+vertActuelle+","+vertActuelle+")";
+
+                img2.style.width =  Math.round(Number(img2.style.width.replace("%","")) + Number(maxWidth/(tempsAnimation/interinterval)))+"%";
+                img2.style.height = "45%";   
+                if(pourcent >= pourcentReel){
+                    clearInterval(intervalAnimation);
+                    img2.style.width = maxWidth+"%";
+                    p.style.color = "rgb(0,0,0)";
+                }
+            },interinterval);
+            //img.style.left = ((window.innerWidth-450)/52.70+0.6)+"px";
+        }
+    },interinterval);        
+}
+function retournerCarteCacher(carte, tempsAnimation, interinterval ,memoryPréférence){
+    
+    let imageDosSrc = memoryPréférence.dos;
+
+    //pour l'image en fond (dos ou face de carte)
+    let image = new Image();
+    image.src = imageDosSrc;
+
+    let pourcentReel = image.width/image.height*100;
+    let vitesse = pourcentReel / (tempsAnimation/interinterval);
     let pourcent = pourcentReel;
 
-
-    if(carte.getAttribute("class").includes("carteCachée")){
-        carte.setAttribute("class",carte.getAttribute("class").replace("carteCachée","carteRetournée"));
-        let intervalAnimation = setInterval(()=>{
-            pourcent -=  vitesse;
-            carte.style.backgroundSize = pourcent+"% 100%";
-            if(pourcent <=0){
-                clearInterval(intervalAnimation);
-                
-                let carteValeur = cartePosée[carte.id.replace("carte","")];
-        
-                //img.src = "../assets/face-carte-chartreuse-1.png";
-        
-                let p = document.createElement("p");
-                p.innerHTML = carteValeur.valeur;
-                p.style.color = "rgb(255,255,255)";
-                
-                let img2 = document.createElement("img");
-                let tailleImage = 45;
-                carte.appendChild(img2);
-                img2.setAttribute("class","couleur");
-                img2.style.width = "0%";
-                
-                
-                let forme = "forme1";
-                if(memoryPréférence.forme){
-                    forme = memoryPréférence.forme;
-                }
-
-                switch(carteValeur.couleur){
-                    case 0 :
-                        if(carteValeur.valeur % 2 ==0){
-                            carte.insertBefore(p, carte.firstChild);
-                        }
-                        else{
-                            carte.appendChild(p);
-                            img2.style.transform = "scale(-1)";
-                        }
-                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
-                        break;
-                    case 1 :
-                        if(carteValeur.valeur % 2 ==0){
-                            carte.insertBefore(p, carte.firstChild);
-                            img2.style.transform = "scale(-1)";
-                        }
-                        else{
-                            carte.appendChild(p);
-                        }
-                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
-                        break;
-                    case 2 :
-                        if(carteValeur.valeur % 2 ==1){
-                            carte.insertBefore(p, carte.firstChild);
-                        }
-                        else{
-                            carte.appendChild(p);
-                        }
-                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
-                        break;
-                    case 3 :
-                        if(carteValeur.valeur%2 ==1){
-                            carte.insertBefore(p, carte.firstChild);
-                            img2.style.transform = "scale(-1)";
-                        }
-                        else{
-                            carte.appendChild(p);
-                        }
-                        img2.src = "../assets/formes/"+forme+carteValeur.couleur+".png";
-                        break;
-                }
-                
-                let green = 255;
-                let vertActuelle=green;
-                /**/
-                carte.style.backgroundImage = "url('"+imageFaceSrc+"')"; 
-                intervalAnimation = setInterval(()=>{
-                    pourcent += vitesse;
-                    carte.style.backgroundSize = pourcent+"% 100%";
-                    vertActuelle -= green/3.5;
-                    p.style.color = "rgb("+vertActuelle+","+vertActuelle+","+vertActuelle+")";
-
-                    img2.style.width =  Math.round(Number(img2.style.width.replace("%","")) + Number(tailleImage/3.5))+"%";
-                    img2.style.height = "45%";   
-                    if(pourcent >= pourcentReel){
-                        clearInterval(intervalAnimation);
-                        img2.style.width = "45%";
-                        p.style.color = "rgb(0,0,0)";
-                    }
-                },50);
-                //img.style.left = ((window.innerWidth-450)/52.70+0.6)+"px";
-            }
-        },50);        
-    }
-    else if (carte.getAttribute("class").includes("carteRetournée")){
-        carte.setAttribute("class",carte.getAttribute("class").replace("carteRetournée","carteCachée"));
+    carte.setAttribute("class",carte.getAttribute("class").replace("carteRetournée","carteCachée"));
         //tentative de faire changer la taille du texte
         let p = carte.getElementsByTagName("p")[0];
         let psize = 50;
@@ -241,19 +335,24 @@ function retournerCarte(carte){
         let img = carte.querySelector('img');
         let tailleImage = 45;
 
+        //couleur pour la font de la valeur
         let green = 255;
         let vertActuelle=0;
+        //forme
+        image = new Image();
+        image.src = img.src;
+        let maxWidth = (image.width)/(image.height/45);
 
         let intervalAnimation = setInterval(()=>{
             pourcent -=  vitesse;
             carte.style.backgroundSize = pourcent+"% 100%";
             //tentative de faire changer la taille du texte
-            vertActuelle = vertActuelle + green/3.5;
+            vertActuelle = vertActuelle + green/(tempsAnimation/interinterval);
             p.style.color = "rgb("+Math.round(vertActuelle)+","+Math.round(vertActuelle)+","+Math.round(vertActuelle)+")";
 
-            img.style.width =  Math.round(Number(img.style.width.replace("%","")) - Number(tailleImage/3.5))+"%";
+            img.style.width =  Math.round(Number(img.style.width.replace("%","")) - Number(maxWidth/(tempsAnimation/interinterval)))+"%";
             img.style.height = "45%";
-            if(pourcent <=0){
+            if(pourcent <=10){
                 clearInterval(intervalAnimation);
                 carte.removeChild(carte.querySelector('img'));
                 carte.removeChild(p);
@@ -265,9 +364,21 @@ function retournerCarte(carte){
                     if(pourcent >= pourcentReel){
                         clearInterval(intervalAnimation);
                     }
-                },50);
+                },interinterval);
             }
-        },50);
+        },interinterval);
+}
+function retournerCarte(carte){
+
+    let interinterval = 25;
+    let tempsAnimation = 175;
+    let memoryPréférence = memory.préférence;
+
+    if(carte.getAttribute("class").includes("carteCachée")){
+        retournerCarteRevéler(carte, tempsAnimation, interinterval, memoryPréférence);
+    }
+    else if (carte.getAttribute("class").includes("carteRetournée")){
+        retournerCarteCacher(carte, tempsAnimation, interinterval, memoryPréférence);
     }
 }
 
