@@ -111,7 +111,7 @@ function retournerCarteCacher(carte, tempsAnimation, interinterval){
 
             img.style.width =  Math.round(Number(img.style.width.replace("%","")) - Number(maxWidth / (tempsAnimation / interinterval))) + "%";
             img.style.height = "45%";
-            if(pourcent <= 10){
+            if(pourcent <= 0){
                 clearInterval(intervalAnimation);
                 carte.removeChild(carte.querySelector('img'));
                 carte.removeChild(p);
@@ -145,6 +145,7 @@ function retournerCarteRevéler(carte, tempsAnimation, interinterval){
         pourcent -=  vitesse;
         carte.style.backgroundSize = pourcent + "% 100%";
         if(pourcent <= 0){
+            
             clearInterval(intervalAnimation);
             
             let carteValeur = cartePosée[carte.id.replace("carte","")];
