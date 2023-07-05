@@ -1,3 +1,45 @@
+@font-face{
+    font-family: '0';
+    src:
+        local('BOLDFONT'),
+        url('../assets/fonts/the_bold_font/THEBOLDFONT.ttf')
+}
+@font-face {
+    font-family: '1';
+    src:
+        local('breaking_bad'),
+        url('../assets/fonts/heart_breaking_bad/Heart Breaking Bad.otf')
+}
+@font-face{
+    font-family: '2';
+    src:
+        local('braille'),
+        url('../assets/fonts/braille_printing/Braille Printing.ttf')
+}
+@font-face{
+    font-family: '3';
+    src:
+        local('qr'),
+        url('../assets/fonts/qr_font_tfb/QR font tfb.ttf')
+}
+
+.fontClasse0{
+    font-family: '0';
+}
+.fontClasse1{
+    font-family: '1';
+}
+.fontClasse2{
+    font-family: '2';
+}
+.fontClasse3{
+    font-family: '3';
+}
+#aperçuFont{
+    margin : auto;
+    font-size: 150px;
+}
+
 main{
     max-width: 100%;
 }

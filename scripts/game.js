@@ -154,6 +154,8 @@ function retournerCarteRevéler(carte, tempsAnimation, interinterval){
             p.innerHTML = carteValeur.valeur;
             p.style.color = "rgb(255,255,255)";
             
+            p.setAttribute("class","fontClasse"+memoryPréférence.font);
+            
             let img2 = document.createElement("img");
             carte.appendChild(img2);
             img2.setAttribute("class","couleur");
@@ -313,47 +315,6 @@ function choisirCarte(carte){
     vérifierNombreRetournée(true);
 }
 /*première gestion paquet*/
-function préparerPaquet(){
-    let maxCouleur = 0;
-    let maxValeur = 4;
-    switch(memory.partie.difficulté){
-        case 0: 
-            maxCouleur = 1;
-            break;
-        case 1: 
-            maxCouleur = 2;
-            break;
-        case 2: 
-            maxCouleur = 4;
-            break;
-
-    }
-    for(let valeur = 0 ; valeur < maxValeur ; valeur++){
-        for(let couleur = 0 ; couleur < maxCouleur ; couleur++){
-            let carte = { "couleur" : "0"};
-            carte.valeur = valeur + 1;
-            carte.couleur = couleur;
-            paquet.push(carte);
-        }
-    }
-}
-function mélangerCarte(){
-    let listeCarteRestantePaquet =[];
-    let indiceDisponible = [];
-    for(let i = 0 ; i < paquet.length ; i++){
-        listeCarteRestantePaquet.push(2);
-        indiceDisponible.push(i);
-    }
-    while (listeCarteRestantePaquet.filter(value => value > 0).length > 0){
-        let random = indiceDisponible[Math.floor(Math.random() * indiceDisponible.length)];
-
-        listeCarteRestantePaquet[random] = listeCarteRestantePaquet[random] - 1;
-        if(listeCarteRestantePaquet[random] <= 0){
-            indiceDisponible = indiceDisponible.filter(value => value != random);
-        }
-        cartePosée.push(paquet[random]);
-    }
-}
 function affichageCarte(){
     
     let memoryPréférence = memory.préférence;
@@ -397,6 +358,48 @@ function affichageCarte(){
         image.onload = () => {}
     }
 }
+function mélangerCarte(){
+    let listeCarteRestantePaquet =[];
+    let indiceDisponible = [];
+    for(let i = 0 ; i < paquet.length ; i++){
+        listeCarteRestantePaquet.push(2);
+        indiceDisponible.push(i);
+    }
+    while (listeCarteRestantePaquet.filter(value => value > 0).length > 0){
+        let random = indiceDisponible[Math.floor(Math.random() * indiceDisponible.length)];
+
+        listeCarteRestantePaquet[random] = listeCarteRestantePaquet[random] - 1;
+        if(listeCarteRestantePaquet[random] <= 0){
+            indiceDisponible = indiceDisponible.filter(value => value != random);
+        }
+        cartePosée.push(paquet[random]);
+    }
+}
+function préparerPaquet(){
+    let maxCouleur = 0;
+    let maxValeur = 4;
+    switch(memory.partie.difficulté){
+        case 0: 
+            maxCouleur = 1;
+            break;
+        case 1: 
+            maxCouleur = 2;
+            break;
+        case 2: 
+            maxCouleur = 4;
+            break;
+
+    }
+    for(let valeur = 0 ; valeur < maxValeur ; valeur++){
+        for(let couleur = 0 ; couleur < maxCouleur ; couleur++){
+            let carte = { "couleur" : "0"};
+            carte.valeur = valeur + 1;
+            carte.couleur = couleur;
+            paquet.push(carte);
+        }
+    }
+}
+
 /*départ*/
 function start(){
     préparerPaquet();
@@ -418,3 +421,5 @@ let refreshTimer = setInterval(
 let paquet = [];
 let cartePosée = [];
 start();
+
+//todo check pour transition sur le texte

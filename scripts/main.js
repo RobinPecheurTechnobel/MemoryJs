@@ -41,11 +41,11 @@ function createMemoryPreference(){
 
     let imageForme = document.getElementById("formeCarte");
     let forme = imageForme.src.split("/formes/")[1].split(".gif")[0];
-
     let préférence = {
         "dos" : ".."+urlDos, 
         "face" : ".."+urlDos.replace("dos","face").replace("gif","png"),
-        "forme" : forme
+        "forme" : forme,
+        "font" : document.getElementById("aperçuFont").style.fontFamily.replaceAll('"','')
     };
     return préférence;
 }
@@ -62,6 +62,8 @@ function  goGame(difficulté){
     console.log(memory.préférence);
 
     localStorage.setItem("memory",JSON.stringify(memory));
+
+    clearInterval(aperçuFont);
 
     window.location.href = "/memory.html";
 }
@@ -111,6 +113,19 @@ function dosCartePreference(){
             localStorage.setItem("memory",JSON.stringify(memory));
         }
     });
+}
+function policePreference(){
+    let value = document.getElementById("aperçuFont").style.fontFamily.replaceAll('"','');
+
+    console.log(value);
+    let indexPolice = value === '0'? 0 : parseInt(value); 
+    indexPolice++;
+    if(indexPolice > 3){
+        indexPolice = 0;
+    }
+    document.getElementById("aperçuFont").style = "font-Family : '" + indexPolice + "'";
+
+    createMemory();
 }
 function formePreference(){
     
@@ -164,6 +179,22 @@ function replissageClassement(){
 function start(){
     
     let memory = JSON.parse(localStorage.getItem("memory"));
+    let pAperçu = document.getElementById("aperçuFont");
+    if(!memory.préférence || !memory.préférence.font){
+        pAperçu.style = "font-Family : '0'";
+    }
+    else{
+        pAperçu.style = "font-Family : '" + memory.préférence.font + "'";
+    }
+    let compteur = 0;
+    aperçuFont = setInterval(()=>{
+        compteur++;
+        if(compteur > 9){
+            compteur = 0;
+        }
+        pAperçu.innerHTML = compteur;
+    },500);
+
     if(memory && memory.préférence){
         document.getElementById("dosDeCarte").src = memory.préférence.dos;
     }
@@ -171,4 +202,6 @@ function start(){
     replissageClassement();
 }
 
+
+let aperçuFont;
 start();
