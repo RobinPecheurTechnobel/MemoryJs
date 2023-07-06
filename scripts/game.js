@@ -82,14 +82,15 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
     let p = zoneTexte.getElementsByTagName("p")[0];
 
     let padding = 20;
-    let maxHeigth = (90 - padding )/2;
-    zoneTexte.style.height = (90 - padding )/2 + "%";
+    let maxHeigth = (100 - padding * 1.5 )/2;
+    zoneTexte.style.height = (100 - padding * 1.5 )/2 + "%";
+    padding = faceIntérieure.clientHeight/6.5 + "px"; 
 
     switch(carteValeur.couleur){
         case 0 :
             if(carteValeur.valeur % 2 == 0){
                 faceIntérieure.appendChild(img);
-                zoneTexte.style.paddingTop = padding + "%";
+                zoneTexte.style.paddingTop = padding;
                 p.style.marginTop = "auto";
                 p.style.paddingTop = "auto";
                 p.style.marginBottom = "0px";
@@ -102,8 +103,11 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
 
                 if(forme !== "forme3"){
                     img.style.transform = "scale(-1)";
+                    img.style.paddingBottom = padding;
                 }
-                img.style.paddingBottom = padding + "%";
+                else{
+                    img.style.paddingTop = padding;
+                }
                 img.style.marginBottom = "0px";
                 img.style.marginTop = "auto";
             }
@@ -111,7 +115,7 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
         case 1 :
             if(carteValeur.valeur % 2 == 0){
                 faceIntérieure.appendChild(img);
-                zoneTexte.style.paddingTop = padding + "%";
+                zoneTexte.style.paddingTop = padding;
 
                 p.style.marginTop = "auto";
                 p.style.paddingTop = "auto";
@@ -127,7 +131,7 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
             else{
                 faceIntérieure.insertBefore(img, zoneTexte);
 
-                img.style.paddingTop = padding + "%";
+                img.style.paddingTop = padding;
                 img.style.marginBottom = "0px";
                 img.style.marginTop = "auto";
             }
@@ -135,7 +139,7 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
         case 2 :
             if(carteValeur.valeur % 2 == 1){
                 faceIntérieure.appendChild(img);
-                zoneTexte.style.paddingTop = padding + "%";
+                zoneTexte.style.paddingTop = padding;
 
                 p.style.marginTop = "auto";
                 p.style.paddingTop = "auto";
@@ -151,7 +155,7 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
             else{
                 faceIntérieure.insertBefore(img, zoneTexte);
 
-                img.style.paddingTop = padding + "%";
+                img.style.paddingTop = padding;
                 img.style.marginBottom = "0px";
                 img.style.marginTop = "auto";
             }
@@ -159,7 +163,7 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
         case 3 :
             if(carteValeur.valeur % 2 == 1){
                 faceIntérieure.appendChild(img);
-                zoneTexte.style.paddingTop = padding + "%";
+                zoneTexte.style.paddingTop = padding;
                 p.style.marginTop = "auto";
                 p.style.paddingTop = "auto";
                 p.style.marginBottom = "0px";
@@ -174,7 +178,7 @@ function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
             else{
                 faceIntérieure.insertBefore(img, zoneTexte);
 
-                img.style.paddingTop = padding + "%";
+                img.style.paddingTop = padding;
                 img.style.marginBottom = "0px";
                 img.style.marginTop = "auto";
             }
@@ -204,8 +208,6 @@ function retournerCarteRevéler(carte){
     let zoneTexte = faceIntérieure.getElementsByClassName("carteZoneTexte")[0];
     let p = zoneTexte.getElementsByTagName("p")[0];
     p.innerHTML = carteValeur.valeur; 
-    let psize = 50;
-    p.style.fontSize = psize;
 
     p.setAttribute("class","fontClasse"+memoryPréférence.font);
 
