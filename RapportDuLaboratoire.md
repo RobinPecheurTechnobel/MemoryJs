@@ -17,7 +17,7 @@
 <br>
 <h3 align="center">Quelles sont ces technologies ?</h3>
 
-[![js][js-shield]][js-url]
+[[js-shield]][js-url]
 
 <br>
 <br><br><br><br><br><br>
