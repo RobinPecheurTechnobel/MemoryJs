@@ -177,7 +177,7 @@ function replissageClassement(){
     }
 }
 function start(){
-    
+    //check si une préférence pour la font existe déjà
     let memory = JSON.parse(localStorage.getItem("memory"));
     let pAperçu = document.getElementById("aperçuFont");
     if(!memory.préférence || !memory.préférence.font){
@@ -195,8 +195,17 @@ function start(){
         pAperçu.innerHTML = compteur;
     },500);
 
+    //check si une préférence pour le dos de carte existe déjà
     if(memory && memory.préférence){
         document.getElementById("dosDeCarte").src = memory.préférence.dos;
+    }
+    
+    //check si une préférence pour le dos de carte existe déjà
+    if(memory && memory.préférence){
+        document.getElementById("formeCarte").src = "./assets/formes/" + memory.préférence.forme + ".gif";
+    }
+    else{
+        document.getElementById("formeCarte").src = "./assets/formes/forme1.gif";
     }
 
     replissageClassement();
