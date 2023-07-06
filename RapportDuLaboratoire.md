@@ -13,11 +13,12 @@
 
 <br>
 <h3 align="center">En quoi consiste le projet ?</h3>
-<h6 align="center">Un jeu mémory en utilisant les technologies vue durant les semaines précédantes.</h6>
+<p align="center">Un jeu mémory en utilisant les technologies vue durant les semaines précédantes.</p>
 <br>
 <h3 align="center">Quelles sont ces technologies ?</h3>
 
-[![Forks][forks-shield]][forks-url]
+[![js][js-shield]][js-url]
+
 <br>
 <br><br><br><br><br><br>
 
