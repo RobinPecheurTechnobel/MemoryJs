@@ -73,236 +73,177 @@ function changeClassCarte(carte,classeAvant,classeAprès){
     carte.setAttribute("class",carte.getAttribute("class").replace(classeAvant,classeAprès));
 
 }
-/*procédure concernant le retournement des cartes*/
-function retournerCarteCacher(carte, tempsAnimation, interinterval){
-    let memoryPréférence = memory.préférence;
-    let imageDosSrc = memoryPréférence.dos;
+/*procédures concernant le retournement des cartes*/
+function retournerCarteRevélerDisposition(carte,img,forme,carteValeur){
+    
 
-    //pour l'image en fond (dos ou face de carte)
-    let image = new Image();
-    image.src = imageDosSrc;
+    let faceIntérieure = carte.getElementsByClassName("faceIntérieure")[0];
+    let zoneTexte = faceIntérieure.getElementsByClassName("carteZoneTexte")[0];
+    let p = zoneTexte.getElementsByTagName("p")[0];
 
-    let pourcentReel = image.width / image.height * 100;
-    let vitesse = pourcentReel / (tempsAnimation / interinterval);
-    let pourcent = pourcentReel;
+    let padding = 20;
+    let maxHeigth = (90 - padding )/2;
+    zoneTexte.style.height = (90 - padding )/2 + "%";
 
-    carte.setAttribute("class",carte.getAttribute("class").replace("carteRetournée","carteCachée"));
-        //tentative de faire changer la taille du texte
-        let p = carte.getElementsByTagName("p")[0];
-        let psize = 50;
-        p.style.fontSize = psize;
+    switch(carteValeur.couleur){
+        case 0 :
+            if(carteValeur.valeur % 2 == 0){
+                faceIntérieure.appendChild(img);
+                zoneTexte.style.paddingTop = padding + "%";
+                p.style.marginTop = "auto";
+                p.style.paddingTop = "auto";
+                p.style.marginBottom = "0px";
 
-        let img = carte.querySelector('img');
-
-        //couleur pour la font de la valeur
-        let green = 255;
-        let vertActuelle = 0;
-        //forme
-        image = new Image();
-        image.src = img.src;
-        let maxWidth = (image.width) / (image.height / 45);
-
-        let intervalAnimation = setInterval(()=>{
-            pourcent -=  vitesse;
-            carte.style.backgroundSize = pourcent + "% 100%";
-            //tentative de faire changer la taille du texte
-            vertActuelle = vertActuelle + green / (tempsAnimation / interinterval);
-            p.style.color = "rgb(" + Math.round(vertActuelle) + "," + Math.round(vertActuelle) + "," + Math.round(vertActuelle) + ")";
-
-            img.style.width =  Math.round(Number(img.style.width.replace("%","")) - Number(maxWidth / (tempsAnimation / interinterval))) + "%";
-            img.style.height = "45%";
-            if(pourcent <= 0){
-                clearInterval(intervalAnimation);
-                carte.removeChild(carte.querySelector('img'));
-                carte.removeChild(p);
-                
-                carte.style.backgroundImage = "url('" + imageDosSrc + "')"; 
-                intervalAnimation = setInterval(()=>{
-                    pourcent += vitesse;
-                    carte.style.backgroundSize = pourcent + "% 100%";
-                    if(pourcent >= pourcentReel){
-                        clearInterval(intervalAnimation);
-                    }
-                }, interinterval);
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
             }
-        }, interinterval);
+            else{
+                faceIntérieure.insertBefore(img, zoneTexte);
+
+                if(forme !== "forme3"){
+                    img.style.transform = "scale(-1)";
+                }
+                img.style.paddingBottom = padding + "%";
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
+            }
+            break;
+        case 1 :
+            if(carteValeur.valeur % 2 == 0){
+                faceIntérieure.appendChild(img);
+                zoneTexte.style.paddingTop = padding + "%";
+
+                p.style.marginTop = "auto";
+                p.style.paddingTop = "auto";
+                p.style.marginBottom = "0px";
+
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
+                
+                if(forme!=="forme3"){
+                    img.style.transform = "scale(-1)";
+                }
+            }
+            else{
+                faceIntérieure.insertBefore(img, zoneTexte);
+
+                img.style.paddingTop = padding + "%";
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
+            }
+            break;
+        case 2 :
+            if(carteValeur.valeur % 2 == 1){
+                faceIntérieure.appendChild(img);
+                zoneTexte.style.paddingTop = padding + "%";
+
+                p.style.marginTop = "auto";
+                p.style.paddingTop = "auto";
+                p.style.marginBottom = "0px";
+
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
+
+                if(forme !== "forme3"){
+                    img.style.transform = "scale(-1)";
+                }
+            }
+            else{
+                faceIntérieure.insertBefore(img, zoneTexte);
+
+                img.style.paddingTop = padding + "%";
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
+            }
+            break;
+        case 3 :
+            if(carteValeur.valeur % 2 == 1){
+                faceIntérieure.appendChild(img);
+                zoneTexte.style.paddingTop = padding + "%";
+                p.style.marginTop = "auto";
+                p.style.paddingTop = "auto";
+                p.style.marginBottom = "0px";
+
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
+
+                if(forme !== "forme3"){
+                    img.style.transform = "scale(-1)";
+                }
+            }
+            else{
+                faceIntérieure.insertBefore(img, zoneTexte);
+
+                img.style.paddingTop = padding + "%";
+                img.style.marginBottom = "0px";
+                img.style.marginTop = "auto";
+            }
+            break;
+    }
+    //source image
+    img.src = "../assets/formes/" + forme + carteValeur.couleur + ".png";
+    //gestion de la taille
+    let maxWidth = (img.width) / (img.height / maxHeigth);
+    img.style.height = maxHeigth + "%"; 
+    img.style.width = maxWidth;     
 }
-function retournerCarteRevéler(carte, tempsAnimation, interinterval){
+function retournerCarteRevéler(carte){
     let memoryPréférence = memory.préférence;
     let imageDosSrc = memoryPréférence.dos;
-    let imageFaceSrc = memoryPréférence.face;
 
     //pour l'image en fond (dos ou face de carte)
+    
     let image = new Image();
     image.src = imageDosSrc;
-
-    let pourcentReel = image.width / image.height * 100;
-    let vitesse = pourcentReel / (tempsAnimation / interinterval);
-    let pourcent = pourcentReel;
     
     carte.setAttribute("class",carte.getAttribute("class").replace("carteCachée","carteRetournée"));
-    let intervalAnimation = setInterval(() => {
-        pourcent -=  vitesse;
-        carte.style.backgroundSize = pourcent + "% 100%";
-        if(pourcent <= 0){
             
-            clearInterval(intervalAnimation);
-            
-            let carteValeur = cartePosée[carte.id.replace("carte","")];
+    let carteValeur = cartePosée[carte.id.replace("carte","")];
+
+    let faceIntérieure = carte.getElementsByClassName("faceIntérieure")[0];
+    let zoneTexte = faceIntérieure.getElementsByClassName("carteZoneTexte")[0];
+    let p = zoneTexte.getElementsByTagName("p")[0];
+    p.innerHTML = carteValeur.valeur; 
+    let psize = 50;
+    p.style.fontSize = psize;
+
+    p.setAttribute("class","fontClasse"+memoryPréférence.font);
+
+    let img = document.createElement("img");
+    img.setAttribute("class","couleur");
+
+    let forme = "forme1";
+    if(memoryPréférence.forme){
+        forme = memoryPréférence.forme;
+    }
+
+    retournerCarteRevélerDisposition(carte,img,forme,carteValeur);
+
     
-            let p = document.createElement("p");
-            p.innerHTML = carteValeur.valeur;
-            p.style.color = "rgb(255,255,255)";
-            
-            p.setAttribute("class","fontClasse"+memoryPréférence.font);
-            
-            let img2 = document.createElement("img");
-            carte.appendChild(img2);
-            img2.setAttribute("class","couleur");
-            
-            let forme = "forme1";
-            if(memoryPréférence.forme){
-                forme = memoryPréférence.forme;
-            }
+}
+function retournerCarteCacher(carte){
+    let memoryPréférence = memory.préférence;
+    let imageDosSrc = memoryPréférence.dos;
 
-            switch(carteValeur.couleur){
-                case 0 :
-                    if(carteValeur.valeur % 2 == 0){
-                        carte.insertBefore(p, carte.firstChild);
+    //pour l'image en fond (dos ou face de carte)
+    let image = new Image();
+    image.src = imageDosSrc;
 
-                        p.style.marginBottom = "0px";
-                        p.style.marginTop = "auto";
-
-                        img2.style.marginBottom = "auto";
-                        img2.style.marginTop = "0px";
-                    }
-                    else{
-                        carte.appendChild(p);
-
-                        p.style.marginBottom = "auto";
-                        p.style.marginTop = "0px";
-
-                        if(forme !== "forme3"){
-                            img2.style.transform = "scale(-1)";
-                        }
-                        img2.style.marginBottom = "0px";
-                        img2.style.marginTop = "auto";
-                    }
-                    break;
-                case 1 :
-                    if(carteValeur.valeur % 2 == 0){
-                        carte.insertBefore(p, carte.firstChild);
-
-                        p.style.marginBottom = "0px";
-                        p.style.marginTop = "auto";
-                        
-                        if(forme!=="forme3"){
-                            img2.style.transform = "scale(-1)";
-                        }
-                        img2.style.marginBottom = "auto";
-                        img2.style.marginTop = "0px";
-                    }
-                    else{
-                        carte.appendChild(p);
-
-                        p.style.marginBottom = "auto";
-                        p.style.marginTop = "0px";
-
-                        img2.style.marginBottom = "0px";
-                        img2.style.marginTop = "auto";
-                    }
-                    break;
-                case 2 :
-                    if(carteValeur.valeur % 2 == 1){
-                        carte.insertBefore(p, carte.firstChild);
-
-                        p.style.marginBottom = "0px";
-                        p.style.marginTop = "auto";
-
-                        if(forme !== "forme3"){
-                            img2.style.transform = "scale(-1)";
-                        }
-                        img2.style.marginBottom = "auto";
-                        img2.style.marginTop = "0px";
-                    }
-                    else{
-                        carte.appendChild(p);
-
-                        p.style.marginBottom = "auto";
-                        p.style.marginTop = "0px";
-
-                        img2.style.marginBottom = "0px";
-                        img2.style.marginTop = "auto";
-                    }
-                    break;
-                case 3 :
-                    if(carteValeur.valeur % 2 == 1){
-                        carte.insertBefore(p, carte.firstChild);
-
-                        p.style.marginBottom = "0px";
-                        p.style.marginTop = "auto";
-
-                        if(forme !== "forme3"){
-                            img2.style.transform = "scale(-1)";
-                        }
-                        img2.style.marginBottom = "auto";
-                        img2.style.marginTop = "0px";
-                    }
-                    else{
-                        carte.appendChild(p);
-
-                        p.style.marginBottom = "auto";
-                        p.style.marginTop = "0px";
-
-                        img2.style.marginBottom = "0px";
-                        img2.style.marginTop = "auto";
-                    }
-                    break;
-            }
-            img2.src = "../assets/formes/" + forme + carteValeur.couleur + ".png";
-            
-            //couleur pour la font de la valeur
-            let green = 255;
-            let vertActuelle = green;
-
-            let maxWidth = (img2.width) / (img2.height / 45);
-            img2.style.width = "0%";
-
-            /**/
-            carte.style.backgroundImage = "url('" + imageFaceSrc + "')"; 
-            intervalAnimation = setInterval(()=>{
-                pourcent += vitesse;
-                carte.style.backgroundSize = pourcent + "% 100%";
-                vertActuelle -= green / (tempsAnimation / interinterval);
-                p.style.color = "rgb(" + vertActuelle + "," + vertActuelle + "," + vertActuelle + ")";
-
-                let value = Math.round(Number(img2.style.width.replace("%","")) + Number(maxWidth/(tempsAnimation/interinterval)));
-                if(value <= maxWidth){
-                    img2.style.width =  Math.round(Number(img2.style.width.replace("%","")) + Number(maxWidth/(tempsAnimation/interinterval))) + "%";
-                }
-                else{
-                    img2.style.width = maxWidth;
-                }
-                img2.style.height = "45%"; 
-
-                if(pourcent >= pourcentReel){
-                    clearInterval(intervalAnimation);
-                    img2.style.width = maxWidth + "%";
-                    p.style.color = "rgb(0,0,0)";
-                }
-            }, interinterval);
-        }
-    }, interinterval);        
+    carte.setAttribute("class",carte.getAttribute("class").replace("carteRetournée","carteCachée"));
+    
+    let faceIntérieure = carte.getElementsByClassName("faceIntérieure")[0];
+    let img = faceIntérieure.querySelector('img');
+    //cacher valeur de la carte
+    faceIntérieure.querySelector('p').innerHTML = "";
+    faceIntérieure.removeChild(carte.querySelector('img'));
 }
 function retournerCarte(carte){
-    let interinterval = 25;
-    let tempsAnimation = 175;
 
     if(carte.getAttribute("class").includes("carteCachée")){
-        retournerCarteRevéler(carte, tempsAnimation, interinterval);
+        retournerCarteRevéler(carte);
     }
     else if (carte.getAttribute("class").includes("carteRetournée")){
-        retournerCarteCacher(carte, tempsAnimation, interinterval);
+        retournerCarteCacher(carte);
     }
 }
 /*procédure déclencheur d'action depuis un clique sur une carte*/
@@ -318,6 +259,10 @@ function choisirCarte(carte){
 function affichageCarte(){
     
     let memoryPréférence = memory.préférence;
+
+    let imageDosSrc = memoryPréférence.dos;
+    let imageFaceSrc = memoryPréférence.face;
+
     let zoneDeJeu = document.getElementById("jeu");
     let limiteParRangée = 4;
 
@@ -338,10 +283,29 @@ function affichageCarte(){
         let carte = document.createElement("div");
         carte.id = "carte" + i;
         carte.setAttribute("class","carte carteCachée");
-        
-        let imageDosSrc = memoryPréférence.dos;
 
-        carte.style.backgroundImage = "url('" + imageDosSrc + "')"; 
+        let contenu = document.createElement("div");
+        contenu.setAttribute("class", "contenuCarte");
+        carte.appendChild(contenu);
+
+
+        let intérieure = document.createElement("div");
+        intérieure.setAttribute("class", "faceIntérieure");
+        intérieure.style.backgroundImage = "url('" + imageFaceSrc + "')";
+        contenu.appendChild(intérieure);
+        
+        let extérieure = document.createElement("div");
+        extérieure.setAttribute("class", "faceExtérieure");
+        extérieure.style.backgroundImage = "url('" + imageDosSrc + "')";
+        contenu.appendChild(extérieure);
+
+        let zoneTexte = document.createElement("div");
+        zoneTexte.setAttribute("class", "carteZoneTexte");
+        intérieure.appendChild(zoneTexte);
+
+        let p = document.createElement("p");
+        zoneTexte.appendChild(p);
+
         carte.setAttribute("onclick", "choisirCarte(" + carte.id + ")");
         rangée.appendChild(carte);
     }
