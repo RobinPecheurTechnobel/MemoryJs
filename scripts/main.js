@@ -40,7 +40,7 @@ function createMemoryPreference(){
     let urlDos = imageDos.src.substring(imageDos.src.indexOf("/asset"),imageDos.src.length);
 
     let imageForme = document.getElementById("formeCarte");
-    let forme = imageForme.src.split("/formes/")[1].split(".gif")[0];
+    let forme = "forme" + imageForme.src.split("/formes/forme")[1].split(".png")[0][0];
     let préférence = {
         "dos" : ".."+urlDos, 
         "face" : ".."+urlDos.replace("dos","face").replace("gif","png"),
@@ -59,11 +59,9 @@ function  goGame(difficulté){
         delete memory.partie.timer
     }
 
-    console.log(memory.préférence);
-
     localStorage.setItem("memory",JSON.stringify(memory));
 
-    clearInterval(aperçuFont);
+    clearInterval(intervalAperçu);
 
     window.location.href = "/memory.html";
 }
@@ -117,7 +115,6 @@ function dosCartePreference(){
 function policePreference(){
     let value = document.getElementById("aperçuFont").style.fontFamily.replaceAll('"','');
 
-    console.log(value);
     let indexPolice = value === '0'? 0 : parseInt(value); 
     indexPolice++;
     if(indexPolice > 3){
@@ -130,15 +127,16 @@ function policePreference(){
 function formePreference(){
     
     let imageForme = document.getElementById("formeCarte");
-    let indexForme = imageForme.src.split("/formes/")[1].split("forme")[1].split(".gif")[0];
-    let url = imageForme.src.replace("forme"+indexForme,"forme"+(Number(indexForme)+1));
+    let indexForme = imageForme.src.split("/formes/")[1].split("forme")[1].split(".png")[0];
+    let url = imageForme.src.replace("forme"+indexForme[0],"forme"+(Number(indexForme[0])+1));
+
     checkIfImageExists(url,(exists)=>{
         if(exists){
-            imageForme.src = url;
+            imageForme.src = imageForme.src.replace("forme"+indexForme[0],"forme"+(Number(indexForme[0])+1));
             createMemory();
         }
         else{
-            url = imageForme.src.replace("forme"+indexForme,"forme1");
+            url = imageForme.src.replace("forme"+indexForme[0],"forme1");
             imageForme.src = url;
             createMemory();
         }
@@ -177,8 +175,11 @@ function replissageClassement(){
     }
 }
 function start(){
-    //check si une préférence pour la font existe déjà
     let memory = JSON.parse(localStorage.getItem("memory"));
+    if(!memory){
+        memory = createMemory();
+    }
+    //check si une préférence pour la font existe déjà
     let pAperçu = document.getElementById("aperçuFont");
     if(!memory.préférence || !memory.préférence.font){
         pAperçu.style = "font-Family : '0'";
@@ -186,14 +187,6 @@ function start(){
     else{
         pAperçu.style = "font-Family : '" + memory.préférence.font + "'";
     }
-    let compteur = 0;
-    aperçuFont = setInterval(()=>{
-        compteur++;
-        if(compteur > 9){
-            compteur = 0;
-        }
-        pAperçu.innerHTML = compteur;
-    },500);
 
     //check si une préférence pour le dos de carte existe déjà
     if(memory && memory.préférence){
@@ -201,16 +194,34 @@ function start(){
     }
     
     //check si une préférence pour le dos de carte existe déjà
+    let imageForme = document.getElementById("formeCarte");
+    let forme = "forme1";
     if(memory && memory.préférence){
-        document.getElementById("formeCarte").src = "./assets/formes/" + memory.préférence.forme + ".gif";
+        forme = memory.préférence.forme;
     }
-    else{
-        document.getElementById("formeCarte").src = "./assets/formes/forme1.gif";
-    }
+    imageForme.src = "./assets/formes/" + forme + "0.png";
+
+    //interval pour les aperçu
+    let compteur = 0;
+    let indexForme = 0;
+    intervalAperçu = setInterval(()=>{
+        indexForme++;
+        compteur++;
+
+        if(compteur > 9){
+            compteur = 0;
+        }
+        if(indexForme > 3){
+            indexForme = 0;
+        }
+        let valueForme= imageForme.src.split("formes/forme")[1].split(".png")[0];
+        imageForme.src = "./assets/formes/forme" + valueForme[0] + indexForme  + ".png";
+        pAperçu.innerHTML = compteur;
+    },750);
 
     replissageClassement();
 }
 
 
-let aperçuFont;
+let intervalAperçu;
 start();
