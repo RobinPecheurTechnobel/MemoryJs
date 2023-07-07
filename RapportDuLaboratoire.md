@@ -57,7 +57,7 @@ Par exemple, pour les formes :<br></p>
 * puis une valeur entre <b>0 et 3</b> pour l'identifier<br>
 * C'est toujours un fichier <b>.png</b></p>
 
-![illustration de la structure](https://raw.githubusercontent.com/RobinPecheurTechnobel/MemoryJs/main/assets/formes/formePr%C3%A9sentation.gif?token=GHSAT0AAAAAACEF3QSMF53L2UGUZ7W34EXWZFHYQGQ)
+![illustration de la structure](https://raw.githubusercontent.com/RobinPecheurTechnobel/MemoryJs/main/assets/formes/formePr%C3%A9sentation.gif)
 
 <p>Le code cherchant les éléments selon cette structure, je peux rajouter des formes sans changer le code<p>
 </div>
