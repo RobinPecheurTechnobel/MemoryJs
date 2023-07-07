@@ -16,27 +16,20 @@
 <br>
 <p align="center">Un jeu memory en utilisant les technologies vue durant les semaines précédantes.</p>
 
-<br><br><br><br>
+<br><br><br><br><br>
 
 <h2 align="center">Qu'est-ce qu'un memory ?</h2>
 <br>
 <p align="center">Le memory est un jeu consistant en des paires de cartes à retrouver parmis toutes celles disposées face cachée.</p>
 <p align="center">Les consignes données en début de projet se trouve dans le <a href="https://github.com/RobinPecheurTechnobel/MemoryJs/blob/main/README.md">readme.md</a> de celui-ci</p>
 
-<br><br><br><br>
+<br><br><br><br><br>
 
 <h2 align="center">Quelles sont les technologies utilisées dans ce projet ?</h2>
 
 <br>
 
 <div align="center">
-
-<span style="display:flex; height: 8px;">
-<span style="background-color:#f1e05a !important;;width: 74.6%;"></span>
-<span style="background-color:#FFA500 !important;;width: 12.8%;"></span>
-<span style="background-color:#800080 !important;;width: 9.4%;"></span>
-<span style="background-color:#ccc !important;;width: 3.2%;"></span>
-</span>
 <br>
 
 ![Static Badge](https://img.shields.io/badge/Javascript-74.6%25-yellow)
@@ -48,7 +41,7 @@
 Source : github</p>
 </div>
 
-<br><br><br><br>
+<br><br><br><br><br>
 
 <h2 align="center">Quelles sont les "succés" ?</h2>
 
@@ -69,7 +62,7 @@ Par exemple, pour les formes :<br></p>
 <p>Le code cherchant les éléments selon cette structure, je peux rajouter des formes sans changer le code<p>
 </div>
 
-<br>
+<br><br><br><br><br>
 
 <div align="center">
 <h3><strong>Github pour le versionning</strong></h3>
@@ -78,7 +71,9 @@ De plus, ça aide au découpage du projet.<br>
 Et la rédaction des fichiers comme le readme.md permet une documentation du projet.</p>
 </div>
 
-<br><br><br><br>
+<p align="right">(<a href="#document-top">back to top</a>)</p>
+
+<br><br><br><br><br>
 
 <h2 align="center">Quelles sont les freins recontrés durant la réalisation du projet ?</h2>
 
@@ -121,6 +116,7 @@ Clairment un point à travailler!
 ça dépend de l'afinité de chacun. Personnellement le font-end n'est pas ma tasse de thé.
 </p>
 </div>
+<p align="right">(<a href="#document-top">back to top</a>)</p>
 
 <br><br><br><br>
 
