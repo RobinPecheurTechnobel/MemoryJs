@@ -63,6 +63,9 @@ Par exemple, pour les formes :<br></p>
 * suivi du <b>numéro de la série</b> de forme<br>
 * puis une valeur entre <b>0 et 3</b> pour l'identifier<br>
 * C'est toujours un fichier <b>.png</b></p>
+
+![illustration de la structure](https://github.com/RobinPecheurTechnobel/MemoryJs/blob/main/assets/formes/formePrésentation.gif)
+
 </div>
 
 <br><br><br><br>
