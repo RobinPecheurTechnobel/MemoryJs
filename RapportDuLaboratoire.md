@@ -66,6 +66,16 @@ Par exemple, pour les formes :<br></p>
 
 ![illustration de la structure](https://raw.githubusercontent.com/RobinPecheurTechnobel/MemoryJs/main/assets/formes/formePr%C3%A9sentation.gif?token=GHSAT0AAAAAACEF3QSMF53L2UGUZ7W34EXWZFHYQGQ)
 
+<p>Le code cherchant les éléments selon cette structure, je peux rajouter des formes sans changer le code<p>
+</div>
+
+<br>
+
+<div align="center">
+<h3><strong>Github pour le versionning</strong></h3>
+<p>J'ai poussé l'utilisation de github pour stocker mon avancement du projet.<br>
+De plus, ça aide au découpage du projet.<br>
+Et la rédaction des fichiers comme le readme.md permet une documentation du projet.</p>
 </div>
 
 <br><br><br><br>
